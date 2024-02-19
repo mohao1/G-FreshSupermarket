@@ -1,0 +1,191 @@
+syntax = "v1"
+
+info(
+    title: "Sms：客户模块"
+    desc: "进行Sms客户模块的API的编写"
+    author: "mohao"
+    version: "V1.0"
+)
+//User
+type (
+    //登录
+    UserLoginReq{
+        UserName string   `json:"username"`
+        PassWord string   `json:"password"`
+    }
+    //注册
+    UserRegisterReq{
+        name string `json:"name"`
+        phone string `json:"phone"`
+        password string `json:"password"`
+    }
+)
+
+//StoreServices
+type (
+    //获取商店列表（根据地址）
+    GetShopReq{
+        city string `json:"city"`
+    }
+    //获取商品列表
+    ProductListReq{
+        ShopId string `json:"shopId"`
+        ProductType string `json:"productType"`
+        Quantity int64 `json:"quantity"` //存在多少
+        Limit int64 `json:"limit"` //需要多少
+    }
+    //获取折扣商品列表
+    LowProductListReq{
+        ShopId string `json:"shopId"`
+        ProductType string `json:"productType"`
+        Quantity int64 `json:"quantity"` //存在多少
+        Limit int64 `json:"limit"` //需要多少
+    }
+    //获取详细商品信息
+    DetailedProductReq{
+        ProductId string `json:"productId"`
+        Type string `json:"type"`
+    }
+    //获取对应的店铺的公告列表
+    AnnouncementListReq{
+        ShopId string `json:"shopId"`
+    }
+    //获取个人信息
+    GetUserInfo{
+
+    }
+)
+
+//OrderServices
+type (
+    //计算总价
+    TotalPriceReq{
+        productId []string `json:"productId"`
+        productQuantity []int64 `json:"productQuantity"`
+    }
+    //下单
+    PostOrderReq{
+        shopId string `json:"shopId"`
+        productId []string `json:"productId"`
+        productQuantity []int64 `json:"productQuantity"`
+        deliveryTime  string `json:"deliveryTime"`
+        notes string `json:"notes"`
+    }
+    //获取订单列表
+    OrderListReq{
+        limit string `json:"limit"`
+    }
+    //查看订单详细信息
+    GetDetailedOrderReq{
+        orderNumber string `json:"orderNumber"`
+    }
+    //取消订单
+    OverOrderReq{
+        orderNumber string `json:"orderNumber"`
+    }
+    //取消申请
+    CancellationOverOrderReq{
+        orderNumber string `json:"orderNumber"`
+    }
+    //确认订单
+    ConfirmOrderReq{
+        orderNumber string `json:"orderNumber"`
+    }
+)
+
+type (
+    DataResp{
+        Code int `json:"code"`
+        msg string `json:"msg"`
+        data interface{} `json:"data"`
+    }
+)
+
+//客户登录注册
+@server(
+    prefix:     /User //语法块下的所有路由，新增 /User 路由前缀
+    group:      User //语法块下的所有路由，路由归并到 User 目录下
+)
+service DP-api{
+    @doc "Login-用户使用手机登录"
+    @handler Login
+    post /Login (UserLoginReq) returns (DataResp)
+
+    @doc "Register-用户使用手机注册账户"
+    @handler Register
+    post /Register(UserRegisterReq)returns(DataResp)
+
+}
+
+//店铺商品服务
+@server(
+    prefix:     /StoreServices //语法块下的所有路由，新增 /StoreServices 路由前缀
+    group:      StoreServices //语法块下的所有路由，路由归并到 StoreServices 目录下
+)
+service DP-api{
+    @doc "GetShop-获取店铺列表"
+    @handler GetShop
+    get /GetShop (GetShopReq) returns (DataResp)
+
+    @doc "GetProductList-获取商品列表"
+    @handler GetProductList
+    get /GetProductList (ProductListReq) returns (DataResp)
+
+    @doc "GetLowProductList-获取折扣商品列表"
+    @handler GetLowProductList
+    get /GetLowProductList (LowProductListReq) returns (DataResp)
+
+    @doc "GetDetailedProduct-获取详细商品信息"
+    @handler GetDetailedProduct
+    get /GetDetailedProduct (DetailedProductReq) returns (DataResp)
+
+    @doc "GetAnnouncementList-获取对应的店铺的公告列表"
+    @handler GetAnnouncementList
+    get /GetAnnouncementList (AnnouncementListReq) returns (DataResp)
+}
+
+
+
+//订单服务
+@server(
+    prefix:     /Order //语法块下的所有路由，新增 /Order 路由前缀
+    group:      OrderServices //语法块下的所有路由，路由归并到 OrderServices 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetTotalPrice-计算总价"
+    @handler GetTotalPrice
+    post /GetTotalPrice (TotalPriceReq) returns (DataResp)
+
+    @doc "PostOrder-下单"
+    @handler PostOrder
+    post /PostOrder (PostOrderReq) returns (DataResp)
+
+    @doc"GetOrderList-获取订单列表"
+    @handler GetOrderList
+    post /GetOrderList (OrderListReq) returns (DataResp)
+
+    @doc"GetDetailedOrder-查看订单详细信息"
+    @handler GetDetailedOrder
+    post /GetDetailedOrder (GetDetailedOrderReq) returns (DataResp)
+
+    @doc"OverOrder-取消订单"
+    @handler OverOrder
+    post /OverOrder (OverOrderReq) returns (DataResp)
+
+    @doc"CancellationOverOrder-取消申请"
+    @handler CancellationOverOrder
+    post /CancellationOverOrder (CancellationOverOrderReq) returns (DataResp)
+
+    @doc"ConfirmOrder-确认订单"
+    @handler ConfirmOrder
+    post /ConfirmOrder (ConfirmOrderReq) returns (DataResp)
+
+    @doc "GetUserInfo-获取个人信息"
+    @handler GetUserInfo
+    get /GetUserInfo(GetUserInfo)returns(DataResp)
+}
+
+
+
+

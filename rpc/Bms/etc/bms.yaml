@@ -1,0 +1,8 @@
+Name: bms.rpc
+ListenOn: 0.0.0.0:8882
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: bms.rpc
+DB:
+  DataSource: root:123456@tcp(localhost:3306)/dpdatabase?charset=utf8mb4&parseTime=True&loc=Local

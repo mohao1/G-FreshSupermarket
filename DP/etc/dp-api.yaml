@@ -1,0 +1,15 @@
+Name: DP-api
+Host: 0.0.0.0
+Port: 8080
+
+#RPC的直连配置
+SmsRPCConf:
+  Endpoints:
+    - 127.0.0.1:8881
+
+BmsRPCConf:
+  Endpoints:
+    - 127.0.0.1:8882
+
+Auth:
+  AccessSecret: "123456789"

@@ -1,0 +1,293 @@
+syntax = "proto3";
+
+package sms;
+option go_package="./sms";
+
+
+//注册-Register-Req、Resp
+message RegisterReq{
+  string name = 1;
+  string phone = 2;
+  string password =3;
+}
+
+message RegisterResp {
+  int64 code = 1;
+  string data = 2;
+}
+
+
+//登录-Login-Req、Resp
+message LoginReq{
+  string phone=1;
+  string password =2;
+}
+
+message LoginResp{
+    int64 code = 1;
+    string accessToken = 2;
+    string msg=3;
+}
+
+//获取店铺-GetShop-Req、Resp
+message GetShopReq{
+    string city=1;
+}
+
+message GetShopResp{
+  int64 code = 1;
+  repeated Shop shops=2;
+  string msg=3;
+}
+//店铺信息结构
+message Shop{
+  string shopId=1;
+  string shopName=2;
+  string address=3;
+  string city=4;
+}
+
+//获取商品信息列表根据商品类型-ProductList-Req、Resp
+message ProductListReq{
+  string shopId=1;
+  string productType=2;
+  int64 quantity=3;//存在多少
+  int64 limit=4;//需要多少
+}
+
+message ProductListResp{
+  int64 code = 1;
+  repeated Product productList=2;
+  string msg=3;
+}
+//商品信息结构
+message Product{
+  string productId=1;
+  string productName=2;
+  string productPicture=3;
+  string productType=4;
+  string price=5;
+  int64 productSize=6;
+  string producer=7;
+}
+//获取商品信息列表根据商品类型-LowProductList-Req、Resp
+message LowProductListReq{
+  string shopId=1;
+  string productType=2;
+  int64 quantity=3;//存在多少
+  int64 limit=4;//需要多少
+}
+
+message LowProductListResp{
+  int64 code = 1;
+  repeated LowProduct productList=2;
+  string msg=3;
+}
+
+message LowProduct{
+  string productId=1;
+  string productName=2;
+  string productPicture=3;
+  string productType=4;
+  string price=5;
+  int64 productSize=6;
+  string producer=7;
+  int64 quota=8;
+  string  start_time=9;
+  string end_time=10;
+}
+
+
+//详细商品信息
+message DetailedProductReq{
+  string productId=1;
+  string Type=2;
+}
+
+message DetailedProductResp{
+  string productId=1;
+  string productName=2;
+  string productTitle=3;
+  string productPicture=4;
+  string productType=5;
+  string price=6;
+  int64 productSize=7;
+  string producer=8;
+  string productUnit=9;
+}
+
+//获取用户订单列表-GetOrderList-Req、Resp
+message GetOrderListReq{
+  string userId=1;
+  string limit=2;
+}
+
+message GetOrderListResp{
+  repeated GetOrder Order=1;
+}
+
+message GetOrder{
+  string orderNumber=1;
+  string ShopName=2;
+  string total=3;
+  string totalPrice=4;
+  string payment=5;
+  string orderOver=6;
+  string orderReceive=7;
+  string confirmedDelivery=8;
+  string creationTime=9;
+}
+
+//计算总价-TotalPrice-Req、Resp
+message GetTotalPriceReq{
+  repeated string productId=1;
+  repeated int64 productQuantity=2;
+}
+
+message GetTotalPriceResp{
+  string Code=1;
+  string totalPrice=2;
+  string msg=3;
+}
+
+
+//下单-PostOrder-Req、Resp
+message PostOrderReq{
+  string userId=1;
+  string shopId=2;
+  repeated string productId=3;
+  repeated int64 productQuantity=4;
+  string deliveryTime = 5;
+  string notes=6;
+}
+
+message PostOrderResp{
+  int64 code = 1;
+  string orderNumber=2;
+  string msg=3;
+}
+
+
+//确认订单-ConfirmOrder-Req、Resp
+message ConfirmOrderReq{
+  string userId=1;
+  string orderNumber=2;
+}
+
+message ConfirmOrderResp{
+  int64 code = 1;
+  string orderNumber=2;
+  string msg=3;
+}
+
+
+//取消订单-OverOrder-Req、Resp
+message OverOrderReq{
+  string userId=1;
+  string orderNumber=2;
+}
+
+message OverOrderResp{
+  int64 code = 1;
+  string orderNumber=2;
+  string orderType=3;
+  string msg=4;
+}
+
+
+//获取订单详细信息-GetDetailedOrder-Req、Resp
+message DetailedOrderReq{
+  string userId=1;
+  string orderNumber=2;
+}
+
+message DetailedOrderResp{
+  string orderNumber=1;
+  string ShopName=2;
+  string total=3;
+  string totalPrice=4;
+  repeated OrderProduct orderProduct=5;
+  string payment=6;
+  string orderOver=7;
+  string confirmedDelivery=8;
+  string orderReceive=9;
+  string notes=10;
+  string creationTime=11;
+  string confirmTime=12;
+  string deliveryTime=13;
+}
+
+message OrderProduct{
+  string orderName=1;
+  string orderTitle=2;
+  string price=3;
+  int64 productQuantity=4;
+  int64 productSize=5;
+  string productType=6;
+  string productUnit = 7;
+  string productPicture=8;
+}
+
+//获取公告列表
+message AnnouncementListReq{
+  string shopId= 1;
+}
+message AnnouncementListResp{
+  int64 code =1;
+  string msg=2;
+  repeated Announcement announcementList = 3;
+}
+
+message Announcement{
+  string noticeId=1;
+  string noticeTitle = 2;
+}
+
+//获取个人信息
+message UserInfoReq{
+  string userId = 1;
+}
+
+message UserInfoResp{
+  string userId = 1;
+  string userName = 2;
+  string positionName = 3;
+  string registrationTime = 4;
+}
+
+
+
+service Sms {
+  //注册
+  rpc Register(RegisterReq) returns (RegisterResp);
+  //登录
+  rpc Login(LoginReq) returns (LoginResp);
+  //获取店铺
+  rpc GetShop(GetShopReq) returns (GetShopResp);
+  //获取商品列表根据商品类型
+  rpc GetProductList(ProductListReq) returns(ProductListResp);
+  //获取折扣商品列表根据商品类型
+  rpc GetLowProductList(LowProductListReq) returns(LowProductListResp);
+  //获取详细商品信息
+  rpc GetDetailedProduct(DetailedProductReq)returns(DetailedProductResp);
+  //计算总价
+  rpc GetTotalPrice(GetTotalPriceReq)returns(GetTotalPriceResp);
+  //下单
+  rpc PostOrder(PostOrderReq)returns(PostOrderResp);
+  //获取订单列表
+  rpc GetOrderList(GetOrderListReq)returns(GetOrderListResp);
+  //查看订单详细信息
+  rpc GetDetailedOrder(DetailedOrderReq)returns(DetailedOrderResp);
+  //取消订单
+  rpc OverOrder(ConfirmOrderReq)returns(ConfirmOrderResp);
+  //取消申请
+  rpc CancellationOverOrder(ConfirmOrderReq)returns(ConfirmOrderResp);
+  //确认订单
+  rpc ConfirmOrder(ConfirmOrderReq)returns(ConfirmOrderResp);
+
+  //获取对应的店铺的公告列表
+  rpc GetAnnouncementList(AnnouncementListReq)returns(AnnouncementListResp);
+
+  //获取个人信息
+  rpc GetUserInfo(UserInfoReq)returns(UserInfoResp);
+}

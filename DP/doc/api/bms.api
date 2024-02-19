@@ -1,0 +1,446 @@
+syntax = "v1"
+
+info(
+    title: "Bms：商户模块"
+    desc: "进行Bms商户模块的API的编写"
+    author: "mohao"
+    version: "V1.0"
+)
+
+//Staff
+type (
+    StaffLoginReq{
+        staffId string `json:"staffId"`
+        passWord string `json:"password"`
+    }
+)
+
+//Manage
+type (
+    ManageLoginReq{
+        staffId string `json:"staffId"`
+        passWord string `json:"password"`
+    }
+)
+
+//BmsInfo
+type (
+    PersonalInfoReq{}
+)
+
+//BmsOrder
+type (
+    GetUnreceivedOrderReq{
+        limit int64 `json:"limit"`
+    }
+
+    ReceivingOrderReq{
+        OrderNumber string `json:"orderNumber"`
+    }
+
+    UnReceivingOrderReq{
+        OrderNumber string `json:"orderNumber"`
+    }
+
+    GetReceivedOrderReq{
+        limit int64 `json:"limit"`
+    }
+
+    GetCompleteOrderReq{
+        limit int64 `json:"limit"`
+    }
+
+    GetOrderDetailsReq{
+        OrderNumber string `json:"orderNumber"`
+    }
+
+)
+
+//Employee
+type (
+    GetPositionListReq{
+    }
+
+    GetEmployeeListReq{}
+
+    SetEmployeeReq{
+        NewStaffId string `json:"newStaffId"`
+        staffName string `json:"staffName"`
+        positionId string `json:"positionId"`
+        passWord string `json:"passWord"`
+    }
+
+    DeleteEmployeeReq{
+        DeleteStaffId string `json:"deleteStaffId"`
+    }
+
+    UpDateEmployeeReq{
+        UpdateStaffId string `json:"updateStaffId"`
+        staffName string `json:"staffName"`
+        positionId string `json:"positionId"`
+        passWord string `json:"passWord"`
+    }
+
+)
+
+//ProductType
+type (
+    GetProductTypeListReq{
+    }
+)
+
+//Product
+type (
+    GetProductListReq{
+        limit int64 `json:"limit"`
+    }
+
+    GetProductDetailsReq{
+        productId string `json:"productId"`
+    }
+
+    ReleaseProductReq{
+        productName string `json:"productName"`
+        productTitle string `json:"productTitle"`
+        productTypeId string `json:"productTypeId"`
+        productQuantity int64 `json:"productQuantity"`
+        productPicture string `json:"productPicture"`
+        price string `json:"price"`
+        productSize int64 `json:"productSize"`
+        producer string `json:"producer"`
+    }
+
+    UpDateProductReq{
+        productId string `json:"productId"`
+        productName string `json:"productName"`
+        productTitle string `json:"productTitle"`
+        productTypeId string `json:"productTypeId"`
+        productQuantity int64 `json:"productQuantity"`
+        productPicture string `json:"productPicture"`
+        price string `json:"price"`
+        productSize int64 `json:"productSize"`
+        producer string `json:"producer"`
+    }
+
+    DeleteProductReq{
+        productId string `json:"productId"`
+    }
+)
+
+//LowProduct
+type (
+    GetLowProductReq{
+        limit int64 `json:"limit"`
+    }
+
+    GetLowProductDetailsReq{
+        productId string `json:"productId"`
+    }
+
+    ReleaseLowProductReq{
+        productName string `json:"productName"`
+        productTitle string `json:"productTitle"`
+        productTypeId string `json:"productTypeId"`
+        productQuantity int64 `json:"productQuantity"`
+        productPicture string `json:"productPicture"`
+        price string `json:"price"`
+        productSize int64 `json:"productSize"`
+        producer string `json:"producer"`
+        quota int64 `json:"quota"`
+        startTime int64 `json:"startTime"`
+        endTime int64 `json:"endTime"`
+    }
+
+    UpDateLowProductReq{
+        productId string `json:"productId"`
+        productName string `json:"productName"`
+        productTitle string `json:"productTitle"`
+        productTypeId string `json:"productTypeId"`
+        productQuantity int64 `json:"productQuantity"`
+        productPicture string `json:"productPicture"`
+        price string `json:"price"`
+        productSize int64 `json:"productSize"`
+        producer string `json:"producer"`
+        quota int64 `json:"quota"`
+        startTime int64 `json:"startTime"`
+        endTime int64 `json:"endTime"`
+    }
+
+    DeleteLowProductReq{
+        productId string `json:"productId"`
+    }
+)
+
+//BmsOver
+type (
+
+    GetOverOrderReq{
+        limit int64 `json:"limit"`
+    }
+
+    OverOrderHandleReq{
+        orderNumber string `json:"orderNumber"`
+        typeNumber int64 `json:"typeNumber"`
+    }
+
+)
+
+//BmsSalesData
+type (
+
+    GetSalesDataReq{}
+
+    GetOrderDataReq{
+        GetTime int64 `json:"getTime"`
+    }
+
+)
+
+//BmsAnnouncement
+type (
+
+    PostAnnouncementReq{
+        noticeTitle string `json:"noticeTitle"`
+    }
+
+    GetAnnouncementListReq{}
+
+    UpdateAnnouncementReq{
+        noticeId string `json:"noticeId"`
+        noticeTitle string `json:"noticeTitle"`
+    }
+
+    DeleteAnnouncementReq{
+        noticeId string `json:"noticeId"`
+    }
+
+)
+
+
+
+type (
+    BmsDataResp{
+        Code int `json:"code"`
+        msg string `json:"msg"`
+        data interface{} `json:"data"`
+    }
+)
+
+@server(
+    prefix:     /Staff //语法块下的所有路由，新增 /Staff 路由前缀
+    group:      Staff //语法块下的所有路由，路由归并到 Staff 目录下
+)
+service DP-api{
+    @doc "StaffLogin-店铺员工登录"
+    @handler StaffLogin
+    post /Login (StaffLoginReq) returns (BmsDataResp)
+}
+
+@server(
+    prefix:     /Manage //语法块下的所有路由，新增 /Manage 路由前缀
+    group:      Manage //语法块下的所有路由，路由归并到 Manage 目录下
+)
+service DP-api{
+    @doc "ManageLogin-店铺经理登录（商铺的管理员）"
+    @handler ManageLogin
+    post /Login (ManageLoginReq) returns (BmsDataResp)
+}
+
+@server(
+    prefix:     /BmsInfo //语法块下的所有路由，新增 /BmsInfo 路由前缀
+    group:      BmsInfo //语法块下的所有路由，路由归并到 BmsInfo 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "PersonalInfo-获取个人信息"
+    @handler PersonalInfo
+    get /PersonalInfo (PersonalInfoReq) returns (BmsDataResp)
+}
+
+
+@server(
+    prefix:     /BmsOrder //语法块下的所有路由，新增 /BmsOrder 路由前缀
+    group:      BmsOrder //语法块下的所有路由，路由归并到 BmsOrder 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetUnreceivedOrder-查看未接订单"
+    @handler GetUnreceivedOrder
+    get /GetUnreceivedOrder (GetUnreceivedOrderReq) returns (BmsDataResp)
+
+    @doc "ReceivingOrder-接单"
+    @handler ReceivingOrder
+    post /ReceivingOrder (ReceivingOrderReq) returns (BmsDataResp)
+
+    @doc "UnReceivingOrder-取消接单"
+    @handler UnReceivingOrder
+    post /UnReceivingOrder (UnReceivingOrderReq) returns (BmsDataResp)
+
+    @doc "GetReceivedOrder-查看已接订单"
+    @handler GetReceivedOrder
+    get /GetReceivedOrder (GetReceivedOrderReq) returns (BmsDataResp)
+
+    @doc "GetCompleteOrder-查看完成订单"
+    @handler GetCompleteOrder
+    get /GetCompleteOrder (GetCompleteOrderReq) returns (BmsDataResp)
+
+    @doc "GetOrderDetails-查看订单详情"
+    @handler GetOrderDetails
+    get /GetOrderDetails (GetOrderDetailsReq) returns (BmsDataResp)
+
+}
+
+@server(
+    prefix:     /Employee //语法块下的所有路由，新增 /BmsOrder 路由前缀
+    group:      Employee //语法块下的所有路由，路由归并到 BmsOrder 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetPositionList-获取身份列表"
+    @handler GetPositionList
+    get /GetPositionList (GetPositionListReq) returns (BmsDataResp)
+
+    @doc "GetEmployeeList-获取员工列表"
+    @handler GetEmployeeList
+    get /GetEmployeeList (GetEmployeeListReq) returns (BmsDataResp)
+
+    @doc "SetEmployee-设置员工"
+    @handler SetEmployee
+    post /SetEmployee (SetEmployeeReq) returns (BmsDataResp)
+
+    @doc "DeleteEmployee-删除员工"
+    @handler DeleteEmployee
+    post /DeleteEmployee (DeleteEmployeeReq) returns (BmsDataResp)
+
+    @doc "UpDateEmployee-修改员工信息"
+    @handler UpDateEmployee
+    post /UpDateEmployee (UpDateEmployeeReq) returns (BmsDataResp)
+
+}
+
+@server(
+    prefix:     /ProductType //语法块下的所有路由，新增 /ProductType 路由前缀
+    group:      ProductType //语法块下的所有路由，路由归并到 ProductType 目录下
+    jwt : Auth //开启JWT的认证
+)
+
+service DP-api{
+    @doc "GetProductTypeList-获取商品类型列表"
+    @handler GetProductTypeList
+    post /GetProductTypeList (GetProductTypeListReq) returns (BmsDataResp)
+}
+
+@server(
+    prefix:     /Product //语法块下的所有路由，新增 /Product 路由前缀
+    group:      Product //语法块下的所有路由，路由归并到 Product 目录下
+    jwt : Auth //开启JWT的认证
+)
+
+service DP-api{
+    @doc "GetProductList-查看普通商品列表"
+    @handler GetProductList
+    get /GetProductList (GetProductListReq) returns (BmsDataResp)
+
+    @doc "GetProductDetails-查看商品详细情况"
+    @handler GetProductDetails
+    get /GetProductDetails (GetProductDetailsReq) returns (BmsDataResp)
+
+    @doc "ReleaseProduct-设置发布普通商品"
+    @handler ReleaseProduct
+    post /ReleaseProduct (ReleaseProductReq) returns (BmsDataResp)
+
+    @doc "UpDateProduct-修改发布普通商品"
+    @handler UpDateProduct
+    post /UpDateProduct (UpDateProductReq) returns (BmsDataResp)
+
+    @doc "DeleteProduct-删除发布普通商品"
+    @handler DeleteProduct
+    post /DeleteProduct (DeleteProductReq) returns (BmsDataResp)
+}
+
+
+@server(
+    prefix:     /LowProduct //语法块下的所有路由，新增 /LowProduct 路由前缀
+    group:      LowProduct //语法块下的所有路由，路由归并到 LowProduct 目录下
+    jwt : Auth //开启JWT的认证
+)
+
+service DP-api{
+    @doc "GetLowProduct-查看折扣商品列表"
+    @handler GetLowProduct
+    get /GetLowProduct (GetLowProductReq) returns (BmsDataResp)
+
+    @doc "GetLowProductDetails-查看商品详细情况"
+    @handler GetLowProductDetails
+    get /GetLowProductDetails (GetLowProductDetailsReq) returns (BmsDataResp)
+
+    @doc "ReleaseLowProduct-设置发布折扣商品"
+    @handler ReleaseLowProduct
+    post /ReleaseLowProduct (ReleaseLowProductReq) returns (BmsDataResp)
+
+    @doc "UpDateLowProduct-修改发布折扣商品"
+    @handler UpDateLowProduct
+    post /UpDateLowProduct (UpDateLowProductReq) returns (BmsDataResp)
+
+    @doc "DeleteLowProduct-删除发布折扣商品"
+    @handler DeleteLowProduct
+    post /DeleteLowProduct (DeleteLowProductReq) returns (BmsDataResp)
+}
+
+@server(
+    prefix:     /BmsOver //语法块下的所有路由，新增 /BmsOver 路由前缀
+    group:      BmsOver //语法块下的所有路由，路由归并到 BmsOver 目录下
+    jwt : Auth //开启JWT的认证
+)
+
+service DP-api{
+    @doc "GetOverOrder-获取申请取消的订单列表"
+    @handler GetOverOrder
+    get /GetOverOrder (GetOverOrderReq) returns (BmsDataResp)
+
+    @doc "OverOrderHandle-取消订单申请处理"
+    @handler OverOrderHandle
+    post /OverOrderHandle (OverOrderHandleReq) returns (BmsDataResp)
+}
+
+@server(
+    prefix:     /BmsSalesData //语法块下的所有路由，新增 /BmsSalesData 路由前缀
+    group:      BmsSalesData //语法块下的所有路由，路由归并到 BmsSalesData 目录下
+    jwt : Auth //开启JWT的认证
+)
+
+service DP-api{
+    @doc "GetSalesData-查看销售数据"
+    @handler GetSalesData
+    get /GetSalesData (GetSalesDataReq) returns (BmsDataResp)
+
+    @doc "GetOrderData-查看订单数据"
+    @handler GetOrderData
+    get /GetOrderData (GetOrderDataReq) returns (BmsDataResp)
+
+}
+
+@server(
+    prefix:     /BmsAnnouncement //语法块下的所有路由，新增 /BmsAnnouncement 路由前缀
+    group:      BmsAnnouncement //语法块下的所有路由，路由归并到 BmsAnnouncement 目录下
+    jwt : Auth //开启JWT的认证
+)
+
+service DP-api{
+    @doc "PostAnnouncement-发布公告"
+    @handler PostAnnouncement
+    post /PostAnnouncement (PostAnnouncementReq) returns (BmsDataResp)
+
+    @doc "GetOrderData-获取公告列表"
+    @handler GetAnnouncementList
+    get /GetAnnouncementList (GetAnnouncementListReq) returns (BmsDataResp)
+
+    @doc "UpdateAnnouncement-更新公告"
+    @handler UpdateAnnouncement
+    post /UpdateAnnouncement (UpdateAnnouncementReq) returns (BmsDataResp)
+
+    @doc "DeleteAnnouncement-删除公告"
+    @handler DeleteAnnouncement
+    post /DeleteAnnouncement (DeleteAnnouncementReq) returns (BmsDataResp)
+
+}

@@ -1,0 +1,11 @@
+syntax = "v1"
+
+import "sms.api"
+import "bms.api"
+
+info(
+	title: "DP-API的接口主文件"
+	desc: "作为主文件来整合整个程序的接口的引入定义"
+	author: "mohao"
+	version: "V1.0"
+)

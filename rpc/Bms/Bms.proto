@@ -1,0 +1,634 @@
+syntax = "proto3";
+
+package bms;
+option go_package="./bms";
+
+//商户管理员的登录
+message ManageLoginReq{
+  string staffId =1;
+  string password =2;
+}
+
+message ManageLoginResp{
+  int64 code = 1;
+  string msg = 2;
+  string accessToken = 3;
+}
+
+//普通员工登录
+message StaffLoginReq{
+  string staffId =1;
+  string password =2;
+
+}
+
+message StaffLoginResp{
+  int64 code = 1;
+  string msg=2;
+  string accessToken = 3;
+}
+
+//获取个人信息
+message PersonalInfoReq{
+  string staffId =1;
+}
+
+message PersonalInfoResp{
+  string staffId =1;
+  string staffName = 2;
+  string positionName = 3;
+  string shopId = 4;
+  string shopName = 5;
+}
+
+//查看未接订单
+message UnreceivedOrderReq{
+  string staffId =1;
+  int64 limit = 2;
+}
+
+message UnreceivedOrderResp{
+  repeated Order OrderList = 1;
+}
+
+message Order{
+  string orderNumber=1;
+  string customerName=2;
+  string ShopName=3;
+  string total=4;
+  string totalPrice=5;
+  string payment=6;
+  int64 orderOver=7;
+  int64 orderReceive=8;
+  int64 confirmedDelivery=9;
+  string deliveryTime=10;
+}
+
+//接单
+message ReceivingOrderReq{
+  string staffId = 1;
+  string OrderNumber = 2;
+}
+
+message ReceivingOrderResp{
+  int64 Code = 1;
+  string Msg = 2;
+  string OrderNumber = 3;
+}
+
+//取消接单
+message UnReceivingOrderReq{
+  string staffId = 1;
+  string OrderNumber = 2;
+}
+
+message UnReceivingOrderResp {
+  int64 Code = 1;
+  string Msg = 2;
+  string OrderNumber = 3;
+}
+
+//查看已接订单
+message ReceivedOrderReq{
+  string staffId =1;
+  int64 limit = 2;
+}
+
+message ReceivedOrderResp{
+  repeated Order OrderList = 1;
+}
+
+//查看完成订单
+message CompleteOrderReq{
+  string staffId =1;
+  int64 limit = 2;
+}
+
+message CompleteOrderResp{
+  repeated Order OrderList = 1;
+}
+
+//查看订单详情
+message OrderDetailsReq{
+  string staffId =1;
+  string OrderNumber = 2;
+}
+
+message OrderDetailsResp{
+  string orderNumber=1;
+  string ShopName=2;
+  string total=3;
+  string totalPrice=4;
+  repeated OrderProduct orderProduct=5;
+  string payment=6;
+  string orderOver=7;
+  string confirmedDelivery=8;
+  string orderReceive=9;
+  string notes=10;
+  string creationTime=11;
+  string confirmTime=12;
+  string deliveryTime=13;
+}
+
+message OrderProduct{
+  string orderName=1;
+  string orderTitle=2;
+  string price=3;
+  int64 productQuantity=4;
+  int64 productSize=5;
+  string productType=6;
+  string productUnit = 7;
+  string productPicture=8;
+}
+
+message GetEmployeeListReq{
+  string staffId=1;
+}
+
+message GetEmployeeListResp{
+  int64 code=1;
+  string msg=2;
+  repeated Staff staffList=3;
+}
+
+message Staff{
+  string staffId=1;
+  string staffName=2;
+  string positionId=3;
+  string passWord=4;
+  string shopName = 5;
+  string creationTime=6;
+}
+
+//设置员工
+message SetEmployeeReq{
+  string staffId=1;
+  string NewStaffId=2;
+  string staffName=3;
+  string positionId=4;
+  string passWord=5;
+}
+
+message SetEmployeeResp{
+  int64 code=1;
+  string msg=2;
+  string StaffId=3;
+}
+
+//删除员工
+message DeleteEmployeeReq{
+  string staffId = 1;
+  string setStaffId = 2;
+}
+
+message DeleteEmployeeResp{
+  int64 code=1;
+  string msg=2;
+  string StaffId=3;
+}
+
+//修改员工信息
+
+message UpDateEmployeeReq{
+  string staffId = 1;
+  string setStaffId = 2;
+  string staffName=3;
+  string positionId=4;
+  string passWord=5;
+}
+
+message UpDateEmployeeResp{
+  int64 code=1;
+  string msg=2;
+  string StaffId=3;
+}
+
+//获取身份列表
+message GetPositionListReq{
+  string staffId=1;
+}
+message GetPositionListResp{
+  int64 code =1;
+  string msg=2;
+  repeated Position position =3;
+}
+
+message Position {
+  string positionId = 1 ;
+  string positionName =2 ;
+  string grade = 3 ;
+}
+
+//查看普通商品列表
+message GetProductListReq{
+  string staffId=1;
+  int64 limit = 2;
+}
+
+message GetProductListResp{
+  int64 code =1;
+  string msg=2;
+  repeated Product product =3;
+}
+
+message Product{
+  string productId = 2;
+  string productName = 3;
+  string productTypeName=5;
+  int64 productQuantity=6;
+  string productPicture =7;
+  string producer = 8;
+}
+
+//查看普通商品详细情况
+message GetProductDetailsReq{
+  string staffId=1;
+  string productId = 2;
+}
+
+message GetProductDetailsResp{
+  string productId = 2;
+  string productName = 3;
+  string productTitle = 4;
+  string productTypeName=5;
+  string productUnit = 6;
+  int64 productQuantity=7;
+  string productPicture =8;
+  string  price = 9;
+  int64 productSize =10;
+  string producer = 11;
+}
+
+//设置发布普通商品
+message ReleaseProductReq{
+  string staffId=1;
+  string productName = 2;
+  string productTitle = 3;
+  string productTypeId=4;
+  int64 productQuantity=5;
+  string productPicture =6;
+  string  price = 7;
+  int64 productSize =8;
+  string producer = 9;
+}
+
+message ReleaseProductResp{
+  int64 code =1;
+  string msg=2;
+  string productId=3;
+}
+
+//修改发布普通商品
+message UpDateProductReq{
+  string staffId=1;
+  string productId = 2;
+  string productName = 3;
+  string productTitle = 4;
+  string productTypeId=5;
+  int64 productQuantity=6;
+  string productPicture =7;
+  string  price = 8;
+  int64 productSize =9;
+  string producer = 10;
+}
+
+message UpDateProductResp{
+  int64 code =1;
+  string msg=2;
+  string productId=3;
+}
+
+//删除发布普通商品
+message DeleteProductReq{
+  string staffId=1;
+  string productId = 2;
+}
+
+message DeleteProductResp{
+  int64 code =1;
+  string msg =2;
+  string productId = 3;
+}
+
+
+//查看折扣商品列表
+message GetLowProductReq{
+  string staffId=1;
+  int64 limit = 2;
+}
+message GetLowProductResp{
+  int64 code =1;
+  string msg=2;
+  repeated LowProduct lowProduct =3;
+}
+
+message LowProduct{
+  string productId = 2;
+  string productName = 3;
+  string productTypeName=4;
+  int64  productQuantity=5;
+  string productPicture =6;
+  string producer = 7;
+}
+
+//查看折扣商品详细情况
+message GetLowProductDetailsReq{
+  string staffId=1;
+  string productId = 2;
+}
+message GetLowProductDetailsResp{
+  string productId = 2;
+  string productName = 3;
+  string productTitle = 4;
+  string productTypeName=5;
+  string productUnit = 6;
+  int64  productQuantity=7;
+  string productPicture =8;
+  string price = 9;
+  int64  productSize =10;
+  string producer = 11;
+  int64  quota=12;
+  string startTime = 13;
+  string endTime=14;
+}
+
+//设置发布折扣商品
+message ReleaseLowProductReq{
+  string staffId=1;
+  string productName = 2;
+  string productTitle = 3;
+  string productTypeId=4;
+  int64  productQuantity=5;
+  string productPicture =6;
+  string price = 7;
+  int64  productSize =8;
+  string producer = 9;
+  int64  quota=10;
+  int64 startTime = 11;
+  int64 endTime=12;
+}
+
+message ReleaseLowProductResp{
+  int64 code =1;
+  string msg=2;
+  string productId=3;
+}
+
+//修改发布折扣商品
+message UpDateLowProductReq{
+  string staffId=1;
+  string productId = 2;
+  string productName = 3;
+  string productTitle = 4;
+  string productTypeId=5;
+  int64  productQuantity=6;
+  string productPicture =7;
+  string price = 8;
+  int64  productSize =9;
+  string producer = 10;
+  int64  quota=11;
+  int64 startTime = 12;
+  int64 endTime=13;
+}
+
+message UpDateLowProductResp{
+  int64 code =1;
+  string msg=2;
+  string productId=3;
+}
+
+//删除发布折扣商品
+message DeleteLowProductReq{
+  string staffId=1;
+  string productId = 2;
+}
+
+message DeleteLowProductResp{
+  int64 code =1;
+  string msg =2;
+  string productId = 3;
+}
+
+
+//获取商品类型列表
+message GetProductTypeListReq{
+  string staffId=1;
+}
+
+message GetProductTypeListResp{
+  int64 code =1;
+  string msg=2;
+  repeated ProductType productType=3;
+}
+
+message ProductType{
+  string productTypeId=1;
+  string productTypeName=2;
+  string productUnit=3;
+}
+
+//获取申请取消的订单列表
+message OverOrderListReq{
+  string staffId=1;
+  int64 limit = 2;
+}
+message OverOrderListResp{
+  int64 code = 1;
+  string msg =2;
+  repeated Order OrderList = 3;
+}
+
+//取消订单申请处理
+message OverOrderHandleReq{
+  string staffId=1;
+  string orderNumber=2;
+  int64 type = 3;
+}
+
+message OverOrderHandleResp{
+  int64 code = 1;
+  string msg =2;
+  string productId = 3;
+}
+
+//查看销售数据列表
+message SalesDataListReq{
+  string staffId=1;
+}
+
+message SalesDataListResp{
+  int64 code = 1;
+  string msg =2;
+  repeated salesRecords salesRecords =3;
+}
+
+message salesRecords{
+  string salesRecordsId=1;
+  string productName =2;
+  int64 salesQuantity=3;
+  string TotalPrice=4;
+}
+
+//查看订单数据
+message OrderDataReq{
+  string staffId=1;
+  int64 GetTime=2;
+}
+message OrderDataResp{
+  int64 code = 1;
+  string msg =2;
+  OrderData orderData = 3;
+}
+
+message OrderData{
+  int64 orderQuantity = 1;
+  int64 total_price = 2;
+  int64 total = 3;
+}
+
+
+
+
+//发布公告
+message AnnouncementReq{
+  string staffId= 1 ;
+  string noticeTitle = 2;
+}
+
+message AnnouncementResp{
+  int64 code =1;
+  string msg=2;
+  string noticeId=3;
+}
+
+//获取公告列表
+message AnnouncementListReq{
+  string staffId= 1;
+}
+message AnnouncementListResp{
+  int64 code =1;
+  string msg=2;
+  repeated Announcement announcementList = 3;
+}
+
+message Announcement{
+  string noticeId=1;
+  string noticeTitle = 2;
+  string creationTime=3;
+  string updataTime=4;
+}
+
+//更新公告
+message UpdateAnnouncementReq{
+  string staffId= 1;
+  string noticeId=2;
+  string noticeTitle = 3;
+}
+message UpdateAnnouncementResp{
+  int64 code =1;
+  string msg=2;
+  string noticeId=3;
+}
+
+//删除公告
+message DeleteAnnouncementReq{
+  string staffId= 1;
+  string noticeId=2;
+}
+
+message DeleteAnnouncementResp{
+  int64 code =1;
+  string msg=2;
+  string noticeId=3;
+}
+
+
+
+
+
+service Bms {
+  //ManageLogin-商户管理员的登录
+  rpc ManageLogin(ManageLoginReq)returns(ManageLoginResp);
+  //StaffLogin-普通员工登录
+  rpc StaffLogin(StaffLoginReq)returns(StaffLoginResp);
+  //获取个人信息
+  rpc PersonalInfo(PersonalInfoReq)returns(PersonalInfoResp);
+
+
+  //获取身份列表
+  rpc GetPositionList(GetPositionListReq) returns(GetPositionListResp);
+  //获取员工列表
+  rpc GetEmployeeList(GetEmployeeListReq)returns(GetEmployeeListResp);
+  //设置员工
+  rpc SetEmployee (SetEmployeeReq)returns(SetEmployeeResp);
+  //删除员工
+  rpc DeleteEmployee(DeleteEmployeeReq)returns(DeleteEmployeeResp);
+  //修改员工信息
+  rpc UpDateEmployee(UpDateEmployeeReq)returns(UpDateEmployeeResp);
+
+
+
+  //查看未接订单
+  rpc GetUnreceivedOrder(UnreceivedOrderReq)returns(UnreceivedOrderResp);
+  //接单
+  rpc ReceivingOrder(ReceivingOrderReq)returns(ReceivingOrderResp);
+  //取消接单
+  rpc UnReceivingOrder(UnReceivingOrderReq)returns(UnReceivingOrderResp);
+  //查看已接订单
+  rpc GetReceivedOrder(ReceivedOrderReq)returns(ReceivedOrderResp);
+  //查看完成订单
+  rpc GetCompleteOrder(CompleteOrderReq)returns(CompleteOrderResp);
+  //查看订单详情
+  rpc GetOrderDetails(OrderDetailsReq)returns(OrderDetailsResp);
+
+
+
+  //获取商品类型列表
+  rpc GetProductTypeList(GetProductTypeListReq)returns(GetProductTypeListResp);
+
+  //查看普通商品列表
+  rpc GetProductList (GetProductListReq)returns(GetProductListResp);
+  //查看商品详细情况
+  rpc GetProductDetails (GetProductDetailsReq)returns(GetProductDetailsResp);
+  //设置发布普通商品
+  rpc ReleaseProduct (ReleaseProductReq)returns(ReleaseProductResp);
+  //修改发布普通商品
+  rpc UpDateProduct (UpDateProductReq)returns(UpDateProductResp);
+  //删除发布普通商品
+  rpc DeleteProduct (DeleteProductReq)returns(DeleteProductResp);
+
+  //查看折扣商品列表
+  rpc GetLowProduct (GetLowProductReq)returns(GetLowProductResp);
+  //查看商品详细情况
+  rpc GetLowProductDetails (GetLowProductDetailsReq)returns(GetLowProductDetailsResp);
+  //设置发布折扣商品
+  rpc ReleaseLowProduct (ReleaseLowProductReq)returns(ReleaseLowProductResp);
+  //修改发布折扣商品
+  rpc UpDateLowProduct (UpDateLowProductReq)returns(UpDateLowProductResp);
+  //删除发布折扣商品
+  rpc DeleteLowProduct (DeleteLowProductReq)returns(DeleteLowProductResp);
+
+
+
+  //获取申请取消的订单列表
+  rpc GetOverOrder(OverOrderListReq)returns(OverOrderListResp);
+  //取消订单申请处理
+  rpc OverOrderHandle (OverOrderHandleReq)returns(OverOrderHandleResp);
+
+
+  //查看销售数据
+  rpc GetSalesData(SalesDataListReq)returns(SalesDataListResp);
+  //查看订单数据
+  rpc GetOrderData (OrderDataReq)returns(OrderDataResp);
+
+
+  //发布公告
+  rpc PostAnnouncement (AnnouncementReq) returns(AnnouncementResp);
+  //获取公告列表
+  rpc GetAnnouncementList(AnnouncementListReq)returns(AnnouncementListResp);
+  //更新公告
+  rpc UpdateAnnouncement(UpdateAnnouncementReq)returns(UpdateAnnouncementResp);
+  //删除公告
+  rpc DeleteAnnouncement(DeleteAnnouncementReq)returns(DeleteAnnouncementResp);
+
+}
