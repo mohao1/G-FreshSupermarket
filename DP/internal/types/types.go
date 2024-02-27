@@ -258,3 +258,121 @@ type BmsDataResp struct {
 	Msg  string      `json:"msg"`
 	Data interface{} `json:"data"`
 }
+
+type AdminLoginReq struct {
+	AdminName string `json:"adminName"`
+	PassWord  string `json:"passWord"`
+}
+
+type UpDatePassWordReq struct {
+	PassWord    string `json:"passWord"`
+	NewPassWord string `json:"newPassWord"`
+}
+
+type GetShopListReq struct {
+	Limit int64 `json:"limit"`
+}
+
+type PostShopListReq struct {
+	ShopId      string `json:"shopId"`
+	ShopName    string `json:"shopName"`
+	ShopAddress string `json:"shopAddress"`
+	ShopCity    string `json:"shopCity"`
+}
+
+type PostAdminReq struct {
+	StaffId   string `json:"staffId"`
+	StaffName string `json:"staffName"`
+	Password  string `json:"password"`
+}
+
+type GetAdminReq struct {
+}
+
+type DeleteAdminReq struct {
+	StaffId string `json:"staffId"`
+}
+
+type PostShopAdminReq struct {
+	StaffId string `json:"staffId"`
+	ShopId  string `json:"shopId"`
+}
+
+type DeleteShopAdminReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetShopAdminReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type UpDateShopReq struct {
+	ShopId      string `json:"shopId"`
+	ShopName    string `json:"shopName"`
+	ShopAddress string `json:"shopAddress"`
+	ShopCity    string `json:"shopCity"`
+}
+
+type DeleteShopReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetProductTypeListAdminReq struct {
+	Limit int64 `json:"limit"`
+}
+
+type PostProductTypeReq struct {
+	ProductTypeName string `json:"productTypeName"`
+	ProductTypeUnit string `json:"productTypeUnit"`
+}
+
+type UpDateProductTypeReq struct {
+	ProductTypeId   string `json:"productTypeId"`
+	ProductTypeName string `json:"productTypeName"`
+	ProductTypeUnit string `json:"productTypeUnit"`
+}
+
+type DeleteProductTypeReq struct {
+	ProductTypeId string `json:"productTypeId"`
+}
+
+type GetAllShopStaffListReq struct {
+	Limit int64 `json:"limit"`
+}
+
+type GetShopStaffListReq struct {
+	ShopId string `json:"shopId"`
+	Limit  int64  `json:"limit"`
+}
+
+type GetShopAllStaffSumListReq struct {
+}
+
+type GetUserListReq struct {
+	Limit int64 `json:"limit"`
+}
+
+type GetPositionListAdminReq struct {
+	Limit int64 `json:"limit"`
+}
+
+type PostPositionReq struct {
+	PositionName  string `json:"positionName"`
+	PositionGrade int64  `json:"positionGrade"`
+}
+
+type UpDatePositionReq struct {
+	PositionId    string `json:"positionId"`
+	PositionName  string `json:"positionName"`
+	PositionGrade int64  `json:"positionGrade"`
+}
+
+type DeletePositionReq struct {
+	PositionId string `json:"positionId"`
+}
+
+type AmsDataResp struct {
+	Code int64       `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
+}

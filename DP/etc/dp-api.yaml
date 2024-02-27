@@ -11,5 +11,9 @@ BmsRPCConf:
   Endpoints:
     - 127.0.0.1:8882
 
+AmsRPCConf:
+  Endpoints:
+    - 127.0.0.1:8883
+
 Auth:
   AccessSecret: "123456789"

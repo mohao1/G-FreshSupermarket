@@ -1,0 +1,9 @@
+Name: ams.rpc
+ListenOn: 0.0.0.0:8883
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: ams.rpc
+
+DB:
+  DataSource: root:123456@tcp(localhost:3306)/dpdatabase?charset=utf8mb4&parseTime=True&loc=Local

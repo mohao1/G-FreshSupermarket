@@ -40,6 +40,7 @@ type (
 		ShopName     string    `db:"shop_name"`     // 店铺名称
 		ShopAddress  string    `db:"shop_address"`  // 店铺地址
 		ShopCity     string    `db:"shop_city"`     // 所在城市
+		ShopAdmin    string    `db:"shop_admin"`    // 商店经理id
 		CreationTime time.Time `db:"creation_time"` // 创建时间
 	}
 )
@@ -72,14 +73,14 @@ func (m *defaultShopModel) FindOne(ctx context.Context, shopId string) (*Shop, e
 }
 
 func (m *defaultShopModel) Insert(ctx context.Context, data *Shop) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, shopRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.ShopId, data.ShopName, data.ShopAddress, data.ShopCity, data.CreationTime)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?)", m.table, shopRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.ShopId, data.ShopName, data.ShopAddress, data.ShopCity, data.ShopAdmin, data.CreationTime)
 	return ret, err
 }
 
 func (m *defaultShopModel) Update(ctx context.Context, data *Shop) error {
 	query := fmt.Sprintf("update %s set %s where `shop_id` = ?", m.table, shopRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.ShopName, data.ShopAddress, data.ShopCity, data.CreationTime, data.ShopId)
+	_, err := m.conn.ExecCtx(ctx, query, data.ShopName, data.ShopAddress, data.ShopCity, data.ShopAdmin, data.CreationTime, data.ShopId)
 	return err
 }
 

@@ -4,6 +4,13 @@ package handler
 import (
 	"net/http"
 
+	AdminLogin "DP/DP/internal/handler/AdminLogin"
+	AdminPosition "DP/DP/internal/handler/AdminPosition"
+	AdminProductType "DP/DP/internal/handler/AdminProductType"
+	AdminShop "DP/DP/internal/handler/AdminShop"
+	AdminShopStaff "DP/DP/internal/handler/AdminShopStaff"
+	AdminUpDate "DP/DP/internal/handler/AdminUpDate"
+	AdminUser "DP/DP/internal/handler/AdminUser"
 	BmsAnnouncement "DP/DP/internal/handler/BmsAnnouncement"
 	BmsInfo "DP/DP/internal/handler/BmsInfo"
 	BmsOrder "DP/DP/internal/handler/BmsOrder"
@@ -356,5 +363,173 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/BmsAnnouncement"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/Login",
+				Handler: AdminLogin.AdminLoginHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/AdminLogin"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/UpDatePassWord",
+				Handler: AdminUpDate.UpDatePassWordHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminUpDate"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetShopList",
+				Handler: AdminShop.GetShopListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/PostShop",
+				Handler: AdminShop.PostShopHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/PostAdmin",
+				Handler: AdminShop.PostAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetAdmin",
+				Handler: AdminShop.GetAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/DeleteAdmin",
+				Handler: AdminShop.DeleteAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/PostShopAdmin",
+				Handler: AdminShop.PostShopAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/DeleteShopAdmin",
+				Handler: AdminShop.DeleteShopAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetShopAdmin",
+				Handler: AdminShop.GetShopAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/UpDateShop",
+				Handler: AdminShop.UpDateShopHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/DeleteShop",
+				Handler: AdminShop.DeleteShopHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminShop"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetProductTypeList",
+				Handler: AdminProductType.GetProductTypeListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/PostProductType",
+				Handler: AdminProductType.PostProductTypeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/UpDateProductType",
+				Handler: AdminProductType.UpDateProductTypeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/DeleteProductType",
+				Handler: AdminProductType.DeleteProductTypeHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminProductType"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetAllShopStaffList",
+				Handler: AdminShopStaff.GetAllShopStaffListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetShopStaffList",
+				Handler: AdminShopStaff.GetShopStaffListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetShopAllStaffSumList",
+				Handler: AdminShopStaff.GetShopAllStaffSumListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminShopStaff"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetUserList",
+				Handler: AdminUser.GetUserListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminUser"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetPositionList",
+				Handler: AdminPosition.GetPositionListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/PostPosition",
+				Handler: AdminPosition.PostPositionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/UpDatePosition",
+				Handler: AdminPosition.UpDatePositionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/DeletePosition",
+				Handler: AdminPosition.DeletePositionHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminPosition"),
 	)
 }

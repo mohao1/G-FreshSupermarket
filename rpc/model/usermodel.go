@@ -16,6 +16,7 @@ type (
 		userModel
 		TransactInsert(ctx context.Context, session sqlx.Session, data *User) (sql.Result, error)
 		PhoneSelectUser(ctx context.Context, session sqlx.Session, phone string) (*User, error)
+		TransactSelectUserList(ctx context.Context, session sqlx.Session, limit int64) (*[]User, error)
 	}
 
 	customUserModel struct {
@@ -51,6 +52,23 @@ func (c customUserModel) PhoneSelectUser(ctx context.Context, session sqlx.Sessi
 		}
 	} else {
 		err := session.QueryRowCtx(ctx, &resp, query, phone)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &resp, nil
+}
+
+func (c *customUserModel) TransactSelectUserList(ctx context.Context, session sqlx.Session, limit int64) (*[]User, error) {
+	query := fmt.Sprintf("select * from %s limit ? , 10", c.table)
+	var resp []User
+	if session == nil {
+		err := c.conn.QueryRowsCtx(ctx, &resp, query, limit)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		err := session.QueryRowsCtx(ctx, &resp, query, limit)
 		if err != nil {
 			return nil, err
 		}

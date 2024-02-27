@@ -2,6 +2,7 @@ syntax = "v1"
 
 import "sms.api"
 import "bms.api"
+import "ams.api"
 
 info(
 	title: "DP-API的接口主文件"

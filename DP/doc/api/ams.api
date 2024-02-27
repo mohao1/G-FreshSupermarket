@@ -1,0 +1,295 @@
+syntax = "v1"
+
+info(
+    title: "Ams：系统管理人员模块"
+    desc: "进行Ams系统管理人员模块的API的编写"
+    author: "mohao"
+    version: "V1.0"
+)
+
+//AdminLoginReq
+type (
+    AdminLoginReq {
+        adminName string `json:"adminName"`
+        passWord string `json:"passWord"`
+    }
+)
+
+//AdminUpDate
+type (
+    UpDatePassWordReq{
+        passWord string `json:"passWord"`
+        newPassWord string `json:"newPassWord"`
+    }
+)
+
+//AdminShop
+type (
+
+    GetShopListReq{
+        limit int64 `json:"limit"`
+    }
+
+    PostShopListReq{
+        shopId string `json:"shopId"`
+        shopName string `json:"shopName"`
+        shopAddress string `json:"shopAddress"`
+        shopCity string `json:"shopCity"`
+    }
+
+    PostAdminReq{
+        staffId string `json:"staffId"`
+        staffName string `json:"staffName"`
+        password string `json:"password"`
+    }
+
+    GetAdminReq{}
+
+    DeleteAdminReq{
+        staffId string `json:"staffId"`
+    }
+
+    PostShopAdminReq{
+        staffId string `json:"staffId"`
+        shopId  string `json:"shopId"`
+    }
+
+    DeleteShopAdminReq{
+        shopId string `json:"shopId"`
+    }
+
+    GetShopAdminReq{
+        shopId string `json:"shopId"`
+    }
+
+    UpDateShopReq{
+        shopId string `json:"shopId"`
+        shopName string `json:"shopName"`
+        shopAddress string `json:"shopAddress"`
+        shopCity string `json:"shopCity"`
+    }
+
+    DeleteShopReq{
+        shopId string `json:"shopId"`
+    }
+)
+
+//AdminProductType
+type (
+
+    GetProductTypeListAdminReq{
+        limit int64 `json:"limit"`
+    }
+
+    PostProductTypeReq{
+        ProductTypeName string `json:"productTypeName"`
+        ProductTypeUnit string `json:"productTypeUnit"`
+    }
+
+    UpDateProductTypeReq{
+        ProductTypeId string `json:"productTypeId"`
+        ProductTypeName string `json:"productTypeName"`
+        ProductTypeUnit string `json:"productTypeUnit"`
+    }
+
+    DeleteProductTypeReq{
+        ProductTypeId string `json:"productTypeId"`
+    }
+
+)
+
+//AdminShopStaff
+type (
+    GetAllShopStaffListReq{
+        limit int64 `json:"limit"`
+    }
+
+    GetShopStaffListReq{
+        shopId string `json:"shopId"`
+        limit int64 `json:"limit"`
+    }
+
+    GetShopAllStaffSumListReq{}
+)
+
+//AdminUser
+type (
+    GetUserListReq{
+        limit int64 `json:"limit"`
+    }
+)
+
+//AdminPosition
+type (
+    GetPositionListAdminReq{
+        limit int64 `json:"limit"`
+    }
+
+    PostPositionReq{
+        PositionName string `json:"positionName"`
+        PositionGrade int64 `json:"positionGrade"`
+    }
+
+    UpDatePositionReq{
+        PositionId string `json:"positionId"`
+        PositionName string `json:"positionName"`
+        PositionGrade int64 `json:"positionGrade"`
+    }
+
+    DeletePositionReq{
+        PositionId string `json:"positionId"`
+    }
+)
+
+
+type (
+    AmsDataResp{
+        Code int64 `json:"code"`
+        msg string `json:"msg"`
+        data interface{} `json:"data"`
+    }
+)
+
+@server(
+    prefix:     /AdminLogin //语法块下的所有路由，新增 /AdminLogin 路由前缀
+    group:      AdminLogin //语法块下的所有路由，路由归并到 AdminLogin 目录下
+)
+service DP-api{
+    @doc "AdminLogin-系统管理人员登录"
+    @handler AdminLogin
+    post /Login (AdminLoginReq) returns (AmsDataResp)
+}
+
+@server(
+    prefix:     /AdminUpDate //语法块下的所有路由，新增 /AdminUpDate 路由前缀
+    group:      AdminUpDate //语法块下的所有路由，路由归并到 AdminUpDate 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "UpDatePassWord-系统管理人员修改密码"
+    @handler UpDatePassWord
+    post /UpDatePassWord (UpDatePassWordReq) returns (AmsDataResp)
+}
+
+@server(
+    prefix:     /AdminShop //语法块下的所有路由，新增 /AdminShop 路由前缀
+    group:      AdminShop//语法块下的所有路由，路由归并到 AdminShop 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetShopList-获取店铺列表"
+    @handler GetShopList
+    get /GetShopList (GetShopListReq) returns (AmsDataResp)
+
+    @doc "PostShop-店铺信息添加"
+    @handler PostShop
+    post /PostShop (PostShopListReq) returns (AmsDataResp)
+
+    @doc "PostAdmin-创建管理账号"
+    @handler PostAdmin
+    post /PostAdmin (PostAdminReq) returns (AmsDataResp)
+
+    @doc "GetAdmin-查看可用管理账号"
+    @handler GetAdmin
+    get /GetAdmin (GetAdminReq) returns (AmsDataResp)
+
+    @doc "DeleteAdmin-删除可用管理账号"
+    @handler DeleteAdmin
+    post /DeleteAdmin (DeleteAdminReq) returns (AmsDataResp)
+
+    @doc "PostShopAdmin-设置店铺的管理员"
+    @handler PostShopAdmin
+    post /PostShopAdmin (PostShopAdminReq) returns (AmsDataResp)
+
+    @doc "DeleteShopAdmin-删除店铺的管理员"
+    @handler DeleteShopAdmin
+    post /DeleteShopAdmin (DeleteShopAdminReq) returns (AmsDataResp)
+
+    @doc "GetShopAdmin-查看店铺的管理员"
+    @handler GetShopAdmin
+    get /GetShopAdmin (GetShopAdminReq) returns (AmsDataResp)
+
+    @doc "UpDateShop-店铺信息修改"
+    @handler UpDateShop
+    post /UpDateShop (UpDateShopReq) returns (AmsDataResp)
+
+    @doc "DeleteShop-删除店铺"
+    @handler DeleteShop
+    post /DeleteShop(DeleteShopReq) returns (AmsDataResp)
+}
+
+@server(
+    prefix:     /AdminProductType //语法块下的所有路由，新增 /AdminProductType 路由前缀
+    group:      AdminProductType//语法块下的所有路由，路由归并到 AdminProductType 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetProductTypeList-获取商品类型列表"
+    @handler GetProductTypeList
+    get /GetProductTypeList(GetProductTypeListAdminReq) returns (AmsDataResp)
+
+    @doc "PostProductType-设置商品类型"
+    @handler PostProductType
+    post /PostProductType(PostProductTypeReq) returns (AmsDataResp)
+
+    @doc "UpDateProductType-修改商品类型"
+    @handler UpDateProductType
+    post /UpDateProductType(UpDateProductTypeReq) returns (AmsDataResp)
+
+    @doc "DeleteProductType-删除商品类型"
+    @handler DeleteProductType
+    post /DeleteProductType(DeleteProductTypeReq) returns (AmsDataResp)
+}
+
+@server(
+    prefix:     /AdminShopStaff //语法块下的所有路由，新增 /AdminShopStaff 路由前缀
+    group:      AdminShopStaff//语法块下的所有路由，路由归并到 AdminShopStaff 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetAllShopStaffList-查看全部店铺员工列表"
+    @handler GetAllShopStaffList
+    get /GetAllShopStaffList(GetAllShopStaffListReq) returns (AmsDataResp)
+
+    @doc "GetShopStaffList-店铺查询人员列表"
+    @handler GetShopStaffList
+    get /GetShopStaffList(GetShopStaffListReq) returns (AmsDataResp)
+
+    @doc "GetShopAllStaffSumList-各个门店人数统计"
+    @handler GetShopAllStaffSumList
+    get /GetShopAllStaffSumList(GetShopAllStaffSumListReq) returns (AmsDataResp)
+}
+
+@server(
+    prefix:     /AdminUser//语法块下的所有路由，新增 /AdminUser 路由前缀
+    group:      AdminUser//语法块下的所有路由，路由归并到 AdminUser 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetUserList-用户信息列表"
+    @handler GetUserList
+    get /GetUserList(GetUserListReq) returns (AmsDataResp)
+}
+
+@server(
+    prefix:     /AdminPosition//语法块下的所有路由，新增 /AdminPosition 路由前缀
+    group:      AdminPosition//语法块下的所有路由，路由归并到 AdminPosition 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api{
+    @doc "GetPositionList-身份信息列表查看"
+    @handler GetPositionList
+    get /GetPositionList(GetPositionListAdminReq) returns (AmsDataResp)
+
+    @doc "PostPosition-身份信息设置"
+    @handler PostPosition
+    post /PostPosition(PostPositionReq) returns (AmsDataResp)
+
+    @doc "UpDatePosition-身份信息修改"
+    @handler UpDatePosition
+    post /UpDatePosition(UpDatePositionReq) returns (AmsDataResp)
+
+    @doc "DeletePosition-身份信息删除"
+    @handler DeletePosition
+    post /DeletePosition(DeletePositionReq) returns (AmsDataResp)
+}

@@ -1,0 +1,387 @@
+syntax = "proto3";
+
+package ams;
+option go_package="./ams";
+
+//系统管理人员登录
+message AdminLoginReq{
+  string adminName = 1;
+  string passWord = 2;
+}
+message AdminLoginResp{
+  int64 code = 1;
+  string msg = 2;
+  string accessToken = 3;
+}
+
+//修改密码
+message UpdateLoginPassWordReq{
+  string adminName = 1;
+  string passWord = 2;
+  string NewPassWord = 3;
+}
+message UpdateLoginPassWordResp{
+  int64 code = 1;
+  string msg = 2;
+}
+
+//获取店铺列表
+message GetShopListReq{
+  string adminId = 1;
+  int64 limit = 2;
+}
+message GetShopListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated Shop shopList = 3;
+}
+message Shop{
+  string shopId=1;
+  string shopName=2;
+  string shopAddress=3;
+  string shopCity=4;
+  string creationTime=5;
+}
+
+//店铺信息添加
+message PostShopReq{
+  string adminId = 1;
+  string shopId=2;
+  string shopName=3;
+  string shopAddress=4;
+  string shopCity=5;
+}
+message PostShopResp{
+  int64 code = 1;
+  string msg = 2;
+  string shopId = 3;
+}
+
+//查看店铺的管理员
+message GetShopAdminReq{
+  string adminId = 1;
+  string shopId = 2;
+}
+message GetShopAdminResp{
+  string staffId=1;
+  string staffName= 2;
+  string positionName=3;
+  string shopId = 4;
+  string ShopName=5;
+  string creationTime=6;
+}
+
+//创建管理账号
+message PostAdminReq{
+  string adminId = 1;
+  string staffId=2;
+  string staffName= 3;
+  string password= 4;
+}
+message PostAdminResp{
+  int64 code = 1;
+  string msg = 2;
+  string staffId = 3;
+}
+
+//查看可用管理账号
+message GetAdminReq{
+  string adminId = 1;
+}
+message GetAdminResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated ShopAdmin shopAdmin = 3;
+}
+message ShopAdmin{
+  string staffId=1;
+  string staffName= 2;
+  string positionName=3;
+  string creationTime=4;
+}
+//删除管理账号
+message DeleteAdminReq{
+  string adminId = 1;
+  string staffId=2;
+}
+message DeleteAdminResp{
+  int64 code = 1;
+  string msg = 2;
+  string staffId = 3;
+}
+
+//设置店铺的管理员
+message PostShopAdminReq{
+  string adminId = 1;
+  string staffId=2;
+  string shopId = 5;
+}
+message PostShopAdminResp{
+  int64 code = 1;
+  string msg = 2;
+  string staffId = 3;
+}
+//删除店铺的管理员
+message DeleteShopAdminReq{
+  string adminId = 1;
+  string shopId = 2;
+}
+message DeleteShopAdminResp{
+  int64 code = 1;
+  string msg = 2;
+  string staffId = 3;
+}
+
+//店铺信息修改
+message UpDateShopReq{
+  string adminId = 1;
+  string shopId=2;
+  string shopName=3;
+  string shopAddress=4;
+  string shopCity=5;
+}
+message UpDateShopResp{
+  int64 code = 1;
+  string msg = 2;
+  string shopId = 3;
+}
+
+//删除店铺
+message DeleteShopReq{
+  string adminId = 1;
+  string shopId=2;
+}
+message DeleteShopResp{
+  int64 code = 1;
+  string msg = 2;
+  string shopId = 3;
+}
+
+//获取商品类型列表
+message GetProductTypeListReq{
+  string adminId = 1;
+  int64 limit=2;
+}
+message GetProductTypeListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated ProductType productTypeList=3;
+}
+message ProductType{
+   string ProductTypeId = 1;
+   string ProductTypeName=2;
+   string ProductTypeUnit=3;
+}
+
+//设置商品类型
+message PostProductTypeReq{
+  string adminId = 1;
+  string ProductTypeName=2;
+  string ProductTypeUnit=3;
+}
+message PostProductTypeResp{
+  int64 code = 1;
+  string msg = 2;
+  string ProductTypeId=3;
+}
+
+//修改商品类型
+message UpDateProductTypeReq{
+  string adminId = 1;
+  string ProductTypeId = 2;
+  string ProductTypeName=3;
+  string ProductTypeUnit=4;
+}
+message UpDateProductTypeResp{
+  int64 code = 1;
+  string msg = 2;
+  string ProductTypeId=3;
+}
+
+//删除商品类型
+message DeleteProductTypeReq{
+  string adminId = 1;
+  string ProductTypeId = 2;
+}
+message DeleteProductTypeResp{
+  int64 code = 1;
+  string msg = 2;
+  string ProductTypeId=3;
+}
+
+//查看全部店铺员工列表
+message GetAllShopStaffListReq{
+  string adminId = 1;
+  int64 limit = 2;
+}
+message GetAllShopStaffListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated Staff staffList = 3;
+}
+message Staff{
+  string staffId=2;
+  string staffName= 3;
+  string ShopId = 4;
+  string ShopName = 5;
+  string positionName=6;
+  string positionId=7;
+  string creationTime= 8;
+}
+
+//店铺查询人员列表
+message GetShopStaffListReq{
+  string adminId = 1;
+  string shopId =2;
+  int64 limit = 3;
+}
+message GetShopStaffListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated Staff staffList = 3;
+}
+
+//各个门店人数统计
+message GetShopAllStaffSumListReq{
+  string adminId = 1;
+}
+message GetShopAllStaffSumListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated StaffSum StaffSumList = 3;
+}
+message StaffSum{
+  string shopId = 1;
+  string shopName = 2;
+  string StaffNumber = 3;
+}
+
+//用户信息列表
+message GetUserListReq{
+  string adminId = 1;
+  int64 limit = 2;
+}
+message GetUserListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated UserData UserDataList=3;
+}
+message UserData{
+  string userId = 1;
+  string userName = 2;
+  string phone = 3;
+  string positionId = 4;
+  string positionName = 7;
+  string RegistrationTime = 8;
+}
+
+//身份信息列表查看
+message GetPositionListReq{
+  string adminId = 1;
+  int64 limit = 2;
+}
+message GetPositionListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated PositionData positionDataList = 3;
+}
+message PositionData{
+   string PositionId = 1;
+   string PositionName=2;
+   string PositionGrade=3;
+}
+
+//身份信息设置
+message PostPositionReq{
+  string adminId = 1;
+  string PositionName=2;
+  int64 PositionGrade=3;
+}
+message PostPositionResp{
+  int64 code = 1;
+  string msg = 2;
+  string PositionId=3;
+}
+
+//身份信息修改
+message UpDatePositionReq{
+  string adminId = 1;
+  string PositionId = 2;
+  string PositionName=3;
+  int64 PositionGrade=4;
+}
+message UpDatePositionResp{
+  int64 code = 1;
+  string msg = 2;
+  string PositionId=3;
+}
+
+//身份信息删除
+message DeletePositionReq{
+  string adminId = 1;
+  string PositionId = 2;
+}
+message DeletePositionResp{
+  int64 code = 1;
+  string msg = 2;
+  string PositionId=3;
+}
+
+
+service Ams {
+  //系统管理人员登录
+  rpc AdminLogin(AdminLoginReq)returns(AdminLoginResp);
+  //修改密码
+  rpc AdminUpdateLoginPassWord(UpdateLoginPassWordReq)returns(UpdateLoginPassWordResp);
+
+  //获取店铺列表
+  rpc GetShopList (GetShopListReq)returns(GetShopListResp);
+  //店铺信息添加
+  rpc PostShop(PostShopReq)returns(PostShopResp);
+  //创建管理账号
+  rpc PostAdmin(PostAdminReq)returns(PostAdminResp);
+  //查看可用管理账号
+  rpc GetAdmin(GetAdminReq)returns(GetAdminResp);
+  //删除可用管理账号
+  rpc DeleteAdmin(DeleteAdminReq)returns(DeleteAdminResp);
+  //设置店铺的管理员
+  rpc PostShopAdmin(PostShopAdminReq)returns(PostShopAdminResp);
+  //删除店铺的管理员
+  rpc DeleteShopAdmin(DeleteShopAdminReq)returns(DeleteShopAdminResp);
+  //查看店铺的管理员
+  rpc GetShopAdmin(GetShopAdminReq)returns(GetShopAdminResp);
+  //店铺信息修改
+  rpc UpDateShop(UpDateShopReq)returns(UpDateShopResp);
+  //删除店铺
+  rpc DeleteShop(DeleteShopReq)returns(DeleteShopResp);
+
+  //获取商品类型列表
+  rpc GetProductTypeList(GetProductTypeListReq)returns(GetProductTypeListResp);
+  //设置商品类型
+  rpc PostProductType(PostProductTypeReq)returns(PostProductTypeResp);
+  //修改商品类型
+  rpc UpDateProductType(UpDateProductTypeReq)returns(UpDateProductTypeResp);
+  //删除商品类型
+  rpc DeleteProductType(DeleteProductTypeReq)returns(DeleteProductTypeResp);
+
+  //查看全部店铺员工列表
+  rpc GetAllShopStaffList(GetAllShopStaffListReq)returns(GetAllShopStaffListResp);
+  //店铺查询人员列表
+  rpc GetShopStaffList(GetShopStaffListReq)returns(GetShopStaffListResp);
+  //各个门店人数统计
+  rpc GetShopAllStaffSumList(GetShopAllStaffSumListReq)returns(GetShopAllStaffSumListResp);
+
+  //用户信息列表
+  rpc GetUserList (GetUserListReq)returns(GetUserListResp);
+
+  //身份信息列表查看
+  rpc GetPositionList(GetPositionListReq)returns(GetPositionListResp);
+  //身份信息设置
+  rpc PostPosition(PostPositionReq)returns(PostPositionResp);
+  //身份信息修改
+  rpc UpDatePosition(UpDatePositionReq)returns(UpDatePositionResp);
+  //身份信息删除
+  rpc DeletePosition(DeletePositionReq)returns(DeletePositionResp);
+
+
+}
