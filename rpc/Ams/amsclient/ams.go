@@ -13,61 +13,93 @@ import (
 )
 
 type (
-	AdminLoginReq              = ams.AdminLoginReq
-	AdminLoginResp             = ams.AdminLoginResp
-	DeleteAdminReq             = ams.DeleteAdminReq
-	DeleteAdminResp            = ams.DeleteAdminResp
-	DeletePositionReq          = ams.DeletePositionReq
-	DeletePositionResp         = ams.DeletePositionResp
-	DeleteProductTypeReq       = ams.DeleteProductTypeReq
-	DeleteProductTypeResp      = ams.DeleteProductTypeResp
-	DeleteShopAdminReq         = ams.DeleteShopAdminReq
-	DeleteShopAdminResp        = ams.DeleteShopAdminResp
-	DeleteShopReq              = ams.DeleteShopReq
-	DeleteShopResp             = ams.DeleteShopResp
-	GetAdminReq                = ams.GetAdminReq
-	GetAdminResp               = ams.GetAdminResp
-	GetAllShopStaffListReq     = ams.GetAllShopStaffListReq
-	GetAllShopStaffListResp    = ams.GetAllShopStaffListResp
-	GetPositionListReq         = ams.GetPositionListReq
-	GetPositionListResp        = ams.GetPositionListResp
-	GetProductTypeListReq      = ams.GetProductTypeListReq
-	GetProductTypeListResp     = ams.GetProductTypeListResp
-	GetShopAdminReq            = ams.GetShopAdminReq
-	GetShopAdminResp           = ams.GetShopAdminResp
-	GetShopAllStaffSumListReq  = ams.GetShopAllStaffSumListReq
-	GetShopAllStaffSumListResp = ams.GetShopAllStaffSumListResp
-	GetShopListReq             = ams.GetShopListReq
-	GetShopListResp            = ams.GetShopListResp
-	GetShopStaffListReq        = ams.GetShopStaffListReq
-	GetShopStaffListResp       = ams.GetShopStaffListResp
-	GetUserListReq             = ams.GetUserListReq
-	GetUserListResp            = ams.GetUserListResp
-	PositionData               = ams.PositionData
-	PostAdminReq               = ams.PostAdminReq
-	PostAdminResp              = ams.PostAdminResp
-	PostPositionReq            = ams.PostPositionReq
-	PostPositionResp           = ams.PostPositionResp
-	PostProductTypeReq         = ams.PostProductTypeReq
-	PostProductTypeResp        = ams.PostProductTypeResp
-	PostShopAdminReq           = ams.PostShopAdminReq
-	PostShopAdminResp          = ams.PostShopAdminResp
-	PostShopReq                = ams.PostShopReq
-	PostShopResp               = ams.PostShopResp
-	ProductType                = ams.ProductType
-	Shop                       = ams.Shop
-	ShopAdmin                  = ams.ShopAdmin
-	Staff                      = ams.Staff
-	StaffSum                   = ams.StaffSum
-	UpDatePositionReq          = ams.UpDatePositionReq
-	UpDatePositionResp         = ams.UpDatePositionResp
-	UpDateProductTypeReq       = ams.UpDateProductTypeReq
-	UpDateProductTypeResp      = ams.UpDateProductTypeResp
-	UpDateShopReq              = ams.UpDateShopReq
-	UpDateShopResp             = ams.UpDateShopResp
-	UpdateLoginPassWordReq     = ams.UpdateLoginPassWordReq
-	UpdateLoginPassWordResp    = ams.UpdateLoginPassWordResp
-	UserData                   = ams.UserData
+	AdminLoginReq               = ams.AdminLoginReq
+	AdminLoginResp              = ams.AdminLoginResp
+	DeleteAdminReq              = ams.DeleteAdminReq
+	DeleteAdminResp             = ams.DeleteAdminResp
+	DeletePositionReq           = ams.DeletePositionReq
+	DeletePositionResp          = ams.DeletePositionResp
+	DeleteProductTypeReq        = ams.DeleteProductTypeReq
+	DeleteProductTypeResp       = ams.DeleteProductTypeResp
+	DeleteShopAdminReq          = ams.DeleteShopAdminReq
+	DeleteShopAdminResp         = ams.DeleteShopAdminResp
+	DeleteShopReq               = ams.DeleteShopReq
+	DeleteShopResp              = ams.DeleteShopResp
+	GetAdminReq                 = ams.GetAdminReq
+	GetAdminResp                = ams.GetAdminResp
+	GetAllShopStaffListReq      = ams.GetAllShopStaffListReq
+	GetAllShopStaffListResp     = ams.GetAllShopStaffListResp
+	GetLowProductSumReq         = ams.GetLowProductSumReq
+	GetLowProductSumResp        = ams.GetLowProductSumResp
+	GetNewUserSumToDayReq       = ams.GetNewUserSumToDayReq
+	GetNewUserSumToDayResp      = ams.GetNewUserSumToDayResp
+	GetOrderSumReq              = ams.GetOrderSumReq
+	GetOrderSumResp             = ams.GetOrderSumResp
+	GetPositionListReq          = ams.GetPositionListReq
+	GetPositionListResp         = ams.GetPositionListResp
+	GetProductSumReq            = ams.GetProductSumReq
+	GetProductSumResp           = ams.GetProductSumResp
+	GetProductTypeListReq       = ams.GetProductTypeListReq
+	GetProductTypeListResp      = ams.GetProductTypeListResp
+	GetShopAdminReq             = ams.GetShopAdminReq
+	GetShopAdminResp            = ams.GetShopAdminResp
+	GetShopAllStaffSumListReq   = ams.GetShopAllStaffSumListReq
+	GetShopAllStaffSumListResp  = ams.GetShopAllStaffSumListResp
+	GetShopListReq              = ams.GetShopListReq
+	GetShopListResp             = ams.GetShopListResp
+	GetShopLowProductListReq    = ams.GetShopLowProductListReq
+	GetShopLowProductListResp   = ams.GetShopLowProductListResp
+	GetShopLowProductSumReq     = ams.GetShopLowProductSumReq
+	GetShopLowProductSumResp    = ams.GetShopLowProductSumResp
+	GetShopOrderSumReq          = ams.GetShopOrderSumReq
+	GetShopOrderSumResp         = ams.GetShopOrderSumResp
+	GetShopProductListReq       = ams.GetShopProductListReq
+	GetShopProductListResp      = ams.GetShopProductListResp
+	GetShopProductSumReq        = ams.GetShopProductSumReq
+	GetShopProductSumResp       = ams.GetShopProductSumResp
+	GetShopSalesRecordsListReq  = ams.GetShopSalesRecordsListReq
+	GetShopSalesRecordsListResp = ams.GetShopSalesRecordsListResp
+	GetShopSalesRecordsSumReq   = ams.GetShopSalesRecordsSumReq
+	GetShopSalesRecordsSumResp  = ams.GetShopSalesRecordsSumResp
+	GetShopStaffListReq         = ams.GetShopStaffListReq
+	GetShopStaffListResp        = ams.GetShopStaffListResp
+	GetShopSumReq               = ams.GetShopSumReq
+	GetShopSumResp              = ams.GetShopSumResp
+	GetShopTimeOrderSumReq      = ams.GetShopTimeOrderSumReq
+	GetShopTimeOrderSumResp     = ams.GetShopTimeOrderSumResp
+	GetUserListReq              = ams.GetUserListReq
+	GetUserListResp             = ams.GetUserListResp
+	GetUserSumReq               = ams.GetUserSumReq
+	GetUserSumResp              = ams.GetUserSumResp
+	PositionData                = ams.PositionData
+	PositionDataSc              = ams.PositionDataSc
+	PostAdminReq                = ams.PostAdminReq
+	PostAdminResp               = ams.PostAdminResp
+	PostPositionReq             = ams.PostPositionReq
+	PostPositionResp            = ams.PostPositionResp
+	PostProductTypeReq          = ams.PostProductTypeReq
+	PostProductTypeResp         = ams.PostProductTypeResp
+	PostShopAdminReq            = ams.PostShopAdminReq
+	PostShopAdminResp           = ams.PostShopAdminResp
+	PostShopReq                 = ams.PostShopReq
+	PostShopResp                = ams.PostShopResp
+	ProductType                 = ams.ProductType
+	SalesRecordsSumData         = ams.SalesRecordsSumData
+	Shop                        = ams.Shop
+	ShopAdmin                   = ams.ShopAdmin
+	ShopOrderSumData            = ams.ShopOrderSumData
+	ShopTimeOrderData           = ams.ShopTimeOrderData
+	Staff                       = ams.Staff
+	StaffSum                    = ams.StaffSum
+	UpDatePositionReq           = ams.UpDatePositionReq
+	UpDatePositionResp          = ams.UpDatePositionResp
+	UpDateProductTypeReq        = ams.UpDateProductTypeReq
+	UpDateProductTypeResp       = ams.UpDateProductTypeResp
+	UpDateShopReq               = ams.UpDateShopReq
+	UpDateShopResp              = ams.UpDateShopResp
+	UpdateLoginPassWordReq      = ams.UpdateLoginPassWordReq
+	UpdateLoginPassWordResp     = ams.UpdateLoginPassWordResp
+	UserData                    = ams.UserData
 
 	Ams interface {
 		// 系统管理人员登录
@@ -118,6 +150,34 @@ type (
 		UpDatePosition(ctx context.Context, in *UpDatePositionReq, opts ...grpc.CallOption) (*UpDatePositionResp, error)
 		// 身份信息删除
 		DeletePosition(ctx context.Context, in *DeletePositionReq, opts ...grpc.CallOption) (*DeletePositionResp, error)
+		// 店铺数量
+		GetShopSum(ctx context.Context, in *GetShopSumReq, opts ...grpc.CallOption) (*GetShopSumResp, error)
+		// 用户人数
+		GetUserSum(ctx context.Context, in *GetUserSumReq, opts ...grpc.CallOption) (*GetUserSumResp, error)
+		// 商品模块
+		GetShopLowProductList(ctx context.Context, in *GetShopLowProductListReq, opts ...grpc.CallOption) (*GetShopLowProductListResp, error)
+		// 进行门店对应折扣商品数量统计
+		GetShopLowProductSum(ctx context.Context, in *GetShopLowProductSumReq, opts ...grpc.CallOption) (*GetShopLowProductSumResp, error)
+		// 门店普通商品
+		GetShopProductList(ctx context.Context, in *GetShopProductListReq, opts ...grpc.CallOption) (*GetShopProductListResp, error)
+		// 进行门店对应普通商品数量统计
+		GetShopProductSum(ctx context.Context, in *GetShopProductSumReq, opts ...grpc.CallOption) (*GetShopProductSumResp, error)
+		// 统计折扣商品总量
+		GetLowProductSum(ctx context.Context, in *GetLowProductSumReq, opts ...grpc.CallOption) (*GetLowProductSumResp, error)
+		// 统计普通商品总量
+		GetProductSum(ctx context.Context, in *GetProductSumReq, opts ...grpc.CallOption) (*GetProductSumResp, error)
+		// 销售数据
+		GetShopSalesRecordsSum(ctx context.Context, in *GetShopSalesRecordsSumReq, opts ...grpc.CallOption) (*GetShopSalesRecordsSumResp, error)
+		// 各个店铺商品总销售的数据列表
+		GetShopSalesRecordsList(ctx context.Context, in *GetShopSalesRecordsListReq, opts ...grpc.CallOption) (*GetShopSalesRecordsListResp, error)
+		// 各个店铺根据时间段的订单数量
+		GetShopTimeOrderSum(ctx context.Context, in *GetShopTimeOrderSumReq, opts ...grpc.CallOption) (*GetShopTimeOrderSumResp, error)
+		// 各个店铺总的订单数量
+		GetShopOrderSum(ctx context.Context, in *GetShopOrderSumReq, opts ...grpc.CallOption) (*GetShopOrderSumResp, error)
+		// 今日消费用户数量
+		GetOrderSum(ctx context.Context, in *GetOrderSumReq, opts ...grpc.CallOption) (*GetOrderSumResp, error)
+		// 今日新增用户数量
+		GetNewUserSumToDay(ctx context.Context, in *GetNewUserSumToDayReq, opts ...grpc.CallOption) (*GetNewUserSumToDayResp, error)
 	}
 
 	defaultAms struct {
@@ -273,4 +333,88 @@ func (m *defaultAms) UpDatePosition(ctx context.Context, in *UpDatePositionReq, 
 func (m *defaultAms) DeletePosition(ctx context.Context, in *DeletePositionReq, opts ...grpc.CallOption) (*DeletePositionResp, error) {
 	client := ams.NewAmsClient(m.cli.Conn())
 	return client.DeletePosition(ctx, in, opts...)
+}
+
+// 店铺数量
+func (m *defaultAms) GetShopSum(ctx context.Context, in *GetShopSumReq, opts ...grpc.CallOption) (*GetShopSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopSum(ctx, in, opts...)
+}
+
+// 用户人数
+func (m *defaultAms) GetUserSum(ctx context.Context, in *GetUserSumReq, opts ...grpc.CallOption) (*GetUserSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetUserSum(ctx, in, opts...)
+}
+
+// 商品模块
+func (m *defaultAms) GetShopLowProductList(ctx context.Context, in *GetShopLowProductListReq, opts ...grpc.CallOption) (*GetShopLowProductListResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopLowProductList(ctx, in, opts...)
+}
+
+// 进行门店对应折扣商品数量统计
+func (m *defaultAms) GetShopLowProductSum(ctx context.Context, in *GetShopLowProductSumReq, opts ...grpc.CallOption) (*GetShopLowProductSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopLowProductSum(ctx, in, opts...)
+}
+
+// 门店普通商品
+func (m *defaultAms) GetShopProductList(ctx context.Context, in *GetShopProductListReq, opts ...grpc.CallOption) (*GetShopProductListResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopProductList(ctx, in, opts...)
+}
+
+// 进行门店对应普通商品数量统计
+func (m *defaultAms) GetShopProductSum(ctx context.Context, in *GetShopProductSumReq, opts ...grpc.CallOption) (*GetShopProductSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopProductSum(ctx, in, opts...)
+}
+
+// 统计折扣商品总量
+func (m *defaultAms) GetLowProductSum(ctx context.Context, in *GetLowProductSumReq, opts ...grpc.CallOption) (*GetLowProductSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetLowProductSum(ctx, in, opts...)
+}
+
+// 统计普通商品总量
+func (m *defaultAms) GetProductSum(ctx context.Context, in *GetProductSumReq, opts ...grpc.CallOption) (*GetProductSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetProductSum(ctx, in, opts...)
+}
+
+// 销售数据
+func (m *defaultAms) GetShopSalesRecordsSum(ctx context.Context, in *GetShopSalesRecordsSumReq, opts ...grpc.CallOption) (*GetShopSalesRecordsSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopSalesRecordsSum(ctx, in, opts...)
+}
+
+// 各个店铺商品总销售的数据列表
+func (m *defaultAms) GetShopSalesRecordsList(ctx context.Context, in *GetShopSalesRecordsListReq, opts ...grpc.CallOption) (*GetShopSalesRecordsListResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopSalesRecordsList(ctx, in, opts...)
+}
+
+// 各个店铺根据时间段的订单数量
+func (m *defaultAms) GetShopTimeOrderSum(ctx context.Context, in *GetShopTimeOrderSumReq, opts ...grpc.CallOption) (*GetShopTimeOrderSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopTimeOrderSum(ctx, in, opts...)
+}
+
+// 各个店铺总的订单数量
+func (m *defaultAms) GetShopOrderSum(ctx context.Context, in *GetShopOrderSumReq, opts ...grpc.CallOption) (*GetShopOrderSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetShopOrderSum(ctx, in, opts...)
+}
+
+// 今日消费用户数量
+func (m *defaultAms) GetOrderSum(ctx context.Context, in *GetOrderSumReq, opts ...grpc.CallOption) (*GetOrderSumResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetOrderSum(ctx, in, opts...)
+}
+
+// 今日新增用户数量
+func (m *defaultAms) GetNewUserSumToDay(ctx context.Context, in *GetNewUserSumToDayReq, opts ...grpc.CallOption) (*GetNewUserSumToDayResp, error) {
+	client := ams.NewAmsClient(m.cli.Conn())
+	return client.GetNewUserSumToDay(ctx, in, opts...)
 }

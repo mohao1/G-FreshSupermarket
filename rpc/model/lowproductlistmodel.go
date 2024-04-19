@@ -25,6 +25,7 @@ type (
 		SelectLowProductListByShopId(ctx context.Context, session sqlx.Session, shopId string, limit int64) (*[]LowProductList, error)
 		TransactUpdateLowProductData(ctx context.Context, session sqlx.Session, data *LowProductList) error
 		TransactInsert(ctx context.Context, session sqlx.Session, data *LowProductList) (sql.Result, error)
+		SelectLowProductSumByShopId(ctx context.Context, shopId string) (*LowProductSum, error)
 	}
 
 	customLowProductListModel struct {
@@ -43,6 +44,11 @@ type (
 		StartTime       time.Time `db:"start_time"`        // 开始时间
 		EndTime         time.Time `db:"end_time"`          // 截至时间
 
+	}
+
+	LowProductSum struct {
+		ShopId      string `db:"shop_id"`      // 商品id
+		CountNumber int64  `db:"count_number"` // 统计商品数量
 	}
 )
 
@@ -145,4 +151,11 @@ func (c *customLowProductListModel) TransactInsert(ctx context.Context, session 
 		ret, err := c.conn.ExecCtx(ctx, query, data.ProductId, data.ProductName, data.ProductTitle, data.ProductTypeId, data.ProductQuantity, data.ProductPicture, data.Price, data.Producer, data.Quota, data.ProductSize, data.ShopId, data.DeleteKey, data.CreationTime, data.UpdataTime, data.StartTime, data.EndTime)
 		return ret, err
 	}
+}
+
+func (c *customLowProductListModel) SelectLowProductSumByShopId(ctx context.Context, shopId string) (*LowProductSum, error) {
+	query := fmt.Sprintf("SELECT `shop_id` , COUNT(*) AS `count_number` FROM %s WHERE shop_id = ? GROUP BY `shop_id`;", c.table)
+	var resp LowProductSum
+	err := c.conn.QueryRowCtx(ctx, &resp, query, shopId)
+	return &resp, err
 }

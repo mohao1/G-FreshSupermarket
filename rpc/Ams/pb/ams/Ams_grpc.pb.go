@@ -43,6 +43,20 @@ const (
 	Ams_PostPosition_FullMethodName             = "/ams.Ams/PostPosition"
 	Ams_UpDatePosition_FullMethodName           = "/ams.Ams/UpDatePosition"
 	Ams_DeletePosition_FullMethodName           = "/ams.Ams/DeletePosition"
+	Ams_GetShopSum_FullMethodName               = "/ams.Ams/GetShopSum"
+	Ams_GetUserSum_FullMethodName               = "/ams.Ams/GetUserSum"
+	Ams_GetShopLowProductList_FullMethodName    = "/ams.Ams/GetShopLowProductList"
+	Ams_GetShopLowProductSum_FullMethodName     = "/ams.Ams/GetShopLowProductSum"
+	Ams_GetShopProductList_FullMethodName       = "/ams.Ams/GetShopProductList"
+	Ams_GetShopProductSum_FullMethodName        = "/ams.Ams/GetShopProductSum"
+	Ams_GetLowProductSum_FullMethodName         = "/ams.Ams/GetLowProductSum"
+	Ams_GetProductSum_FullMethodName            = "/ams.Ams/GetProductSum"
+	Ams_GetShopSalesRecordsSum_FullMethodName   = "/ams.Ams/GetShopSalesRecordsSum"
+	Ams_GetShopSalesRecordsList_FullMethodName  = "/ams.Ams/GetShopSalesRecordsList"
+	Ams_GetShopTimeOrderSum_FullMethodName      = "/ams.Ams/GetShopTimeOrderSum"
+	Ams_GetShopOrderSum_FullMethodName          = "/ams.Ams/GetShopOrderSum"
+	Ams_GetOrderSum_FullMethodName              = "/ams.Ams/GetOrderSum"
+	Ams_GetNewUserSumToDay_FullMethodName       = "/ams.Ams/GetNewUserSumToDay"
 )
 
 // AmsClient is the client API for Ams service.
@@ -97,6 +111,38 @@ type AmsClient interface {
 	UpDatePosition(ctx context.Context, in *UpDatePositionReq, opts ...grpc.CallOption) (*UpDatePositionResp, error)
 	// 身份信息删除
 	DeletePosition(ctx context.Context, in *DeletePositionReq, opts ...grpc.CallOption) (*DeletePositionResp, error)
+	// 店铺数量
+	GetShopSum(ctx context.Context, in *GetShopSumReq, opts ...grpc.CallOption) (*GetShopSumResp, error)
+	// 用户人数
+	GetUserSum(ctx context.Context, in *GetUserSumReq, opts ...grpc.CallOption) (*GetUserSumResp, error)
+	// 商品模块
+	// 门店折扣商品
+	// 获取门店对应折扣商品列表
+	GetShopLowProductList(ctx context.Context, in *GetShopLowProductListReq, opts ...grpc.CallOption) (*GetShopLowProductListResp, error)
+	// 进行门店对应折扣商品数量统计
+	GetShopLowProductSum(ctx context.Context, in *GetShopLowProductSumReq, opts ...grpc.CallOption) (*GetShopLowProductSumResp, error)
+	// 门店普通商品
+	// 获取门店对应普通商品列表
+	GetShopProductList(ctx context.Context, in *GetShopProductListReq, opts ...grpc.CallOption) (*GetShopProductListResp, error)
+	// 进行门店对应普通商品数量统计
+	GetShopProductSum(ctx context.Context, in *GetShopProductSumReq, opts ...grpc.CallOption) (*GetShopProductSumResp, error)
+	// 统计折扣商品总量
+	GetLowProductSum(ctx context.Context, in *GetLowProductSumReq, opts ...grpc.CallOption) (*GetLowProductSumResp, error)
+	// 统计普通商品总量
+	GetProductSum(ctx context.Context, in *GetProductSumReq, opts ...grpc.CallOption) (*GetProductSumResp, error)
+	// 销售数据
+	// 各个店铺总销售的数据
+	GetShopSalesRecordsSum(ctx context.Context, in *GetShopSalesRecordsSumReq, opts ...grpc.CallOption) (*GetShopSalesRecordsSumResp, error)
+	// 各个店铺商品总销售的数据列表
+	GetShopSalesRecordsList(ctx context.Context, in *GetShopSalesRecordsListReq, opts ...grpc.CallOption) (*GetShopSalesRecordsListResp, error)
+	// 各个店铺根据时间段的订单数量
+	GetShopTimeOrderSum(ctx context.Context, in *GetShopTimeOrderSumReq, opts ...grpc.CallOption) (*GetShopTimeOrderSumResp, error)
+	// 各个店铺总的订单数量
+	GetShopOrderSum(ctx context.Context, in *GetShopOrderSumReq, opts ...grpc.CallOption) (*GetShopOrderSumResp, error)
+	// 今日消费用户数量
+	GetOrderSum(ctx context.Context, in *GetOrderSumReq, opts ...grpc.CallOption) (*GetOrderSumResp, error)
+	// 今日新增用户数量
+	GetNewUserSumToDay(ctx context.Context, in *GetNewUserSumToDayReq, opts ...grpc.CallOption) (*GetNewUserSumToDayResp, error)
 }
 
 type amsClient struct {
@@ -323,6 +369,132 @@ func (c *amsClient) DeletePosition(ctx context.Context, in *DeletePositionReq, o
 	return out, nil
 }
 
+func (c *amsClient) GetShopSum(ctx context.Context, in *GetShopSumReq, opts ...grpc.CallOption) (*GetShopSumResp, error) {
+	out := new(GetShopSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetUserSum(ctx context.Context, in *GetUserSumReq, opts ...grpc.CallOption) (*GetUserSumResp, error) {
+	out := new(GetUserSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetUserSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopLowProductList(ctx context.Context, in *GetShopLowProductListReq, opts ...grpc.CallOption) (*GetShopLowProductListResp, error) {
+	out := new(GetShopLowProductListResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopLowProductList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopLowProductSum(ctx context.Context, in *GetShopLowProductSumReq, opts ...grpc.CallOption) (*GetShopLowProductSumResp, error) {
+	out := new(GetShopLowProductSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopLowProductSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopProductList(ctx context.Context, in *GetShopProductListReq, opts ...grpc.CallOption) (*GetShopProductListResp, error) {
+	out := new(GetShopProductListResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopProductList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopProductSum(ctx context.Context, in *GetShopProductSumReq, opts ...grpc.CallOption) (*GetShopProductSumResp, error) {
+	out := new(GetShopProductSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopProductSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetLowProductSum(ctx context.Context, in *GetLowProductSumReq, opts ...grpc.CallOption) (*GetLowProductSumResp, error) {
+	out := new(GetLowProductSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetLowProductSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetProductSum(ctx context.Context, in *GetProductSumReq, opts ...grpc.CallOption) (*GetProductSumResp, error) {
+	out := new(GetProductSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetProductSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopSalesRecordsSum(ctx context.Context, in *GetShopSalesRecordsSumReq, opts ...grpc.CallOption) (*GetShopSalesRecordsSumResp, error) {
+	out := new(GetShopSalesRecordsSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopSalesRecordsSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopSalesRecordsList(ctx context.Context, in *GetShopSalesRecordsListReq, opts ...grpc.CallOption) (*GetShopSalesRecordsListResp, error) {
+	out := new(GetShopSalesRecordsListResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopSalesRecordsList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopTimeOrderSum(ctx context.Context, in *GetShopTimeOrderSumReq, opts ...grpc.CallOption) (*GetShopTimeOrderSumResp, error) {
+	out := new(GetShopTimeOrderSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopTimeOrderSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetShopOrderSum(ctx context.Context, in *GetShopOrderSumReq, opts ...grpc.CallOption) (*GetShopOrderSumResp, error) {
+	out := new(GetShopOrderSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetShopOrderSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetOrderSum(ctx context.Context, in *GetOrderSumReq, opts ...grpc.CallOption) (*GetOrderSumResp, error) {
+	out := new(GetOrderSumResp)
+	err := c.cc.Invoke(ctx, Ams_GetOrderSum_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *amsClient) GetNewUserSumToDay(ctx context.Context, in *GetNewUserSumToDayReq, opts ...grpc.CallOption) (*GetNewUserSumToDayResp, error) {
+	out := new(GetNewUserSumToDayResp)
+	err := c.cc.Invoke(ctx, Ams_GetNewUserSumToDay_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AmsServer is the server API for Ams service.
 // All implementations must embed UnimplementedAmsServer
 // for forward compatibility
@@ -375,6 +547,38 @@ type AmsServer interface {
 	UpDatePosition(context.Context, *UpDatePositionReq) (*UpDatePositionResp, error)
 	// 身份信息删除
 	DeletePosition(context.Context, *DeletePositionReq) (*DeletePositionResp, error)
+	// 店铺数量
+	GetShopSum(context.Context, *GetShopSumReq) (*GetShopSumResp, error)
+	// 用户人数
+	GetUserSum(context.Context, *GetUserSumReq) (*GetUserSumResp, error)
+	// 商品模块
+	// 门店折扣商品
+	// 获取门店对应折扣商品列表
+	GetShopLowProductList(context.Context, *GetShopLowProductListReq) (*GetShopLowProductListResp, error)
+	// 进行门店对应折扣商品数量统计
+	GetShopLowProductSum(context.Context, *GetShopLowProductSumReq) (*GetShopLowProductSumResp, error)
+	// 门店普通商品
+	// 获取门店对应普通商品列表
+	GetShopProductList(context.Context, *GetShopProductListReq) (*GetShopProductListResp, error)
+	// 进行门店对应普通商品数量统计
+	GetShopProductSum(context.Context, *GetShopProductSumReq) (*GetShopProductSumResp, error)
+	// 统计折扣商品总量
+	GetLowProductSum(context.Context, *GetLowProductSumReq) (*GetLowProductSumResp, error)
+	// 统计普通商品总量
+	GetProductSum(context.Context, *GetProductSumReq) (*GetProductSumResp, error)
+	// 销售数据
+	// 各个店铺总销售的数据
+	GetShopSalesRecordsSum(context.Context, *GetShopSalesRecordsSumReq) (*GetShopSalesRecordsSumResp, error)
+	// 各个店铺商品总销售的数据列表
+	GetShopSalesRecordsList(context.Context, *GetShopSalesRecordsListReq) (*GetShopSalesRecordsListResp, error)
+	// 各个店铺根据时间段的订单数量
+	GetShopTimeOrderSum(context.Context, *GetShopTimeOrderSumReq) (*GetShopTimeOrderSumResp, error)
+	// 各个店铺总的订单数量
+	GetShopOrderSum(context.Context, *GetShopOrderSumReq) (*GetShopOrderSumResp, error)
+	// 今日消费用户数量
+	GetOrderSum(context.Context, *GetOrderSumReq) (*GetOrderSumResp, error)
+	// 今日新增用户数量
+	GetNewUserSumToDay(context.Context, *GetNewUserSumToDayReq) (*GetNewUserSumToDayResp, error)
 	mustEmbedUnimplementedAmsServer()
 }
 
@@ -453,6 +657,48 @@ func (UnimplementedAmsServer) UpDatePosition(context.Context, *UpDatePositionReq
 }
 func (UnimplementedAmsServer) DeletePosition(context.Context, *DeletePositionReq) (*DeletePositionResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePosition not implemented")
+}
+func (UnimplementedAmsServer) GetShopSum(context.Context, *GetShopSumReq) (*GetShopSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopSum not implemented")
+}
+func (UnimplementedAmsServer) GetUserSum(context.Context, *GetUserSumReq) (*GetUserSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserSum not implemented")
+}
+func (UnimplementedAmsServer) GetShopLowProductList(context.Context, *GetShopLowProductListReq) (*GetShopLowProductListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopLowProductList not implemented")
+}
+func (UnimplementedAmsServer) GetShopLowProductSum(context.Context, *GetShopLowProductSumReq) (*GetShopLowProductSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopLowProductSum not implemented")
+}
+func (UnimplementedAmsServer) GetShopProductList(context.Context, *GetShopProductListReq) (*GetShopProductListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductList not implemented")
+}
+func (UnimplementedAmsServer) GetShopProductSum(context.Context, *GetShopProductSumReq) (*GetShopProductSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSum not implemented")
+}
+func (UnimplementedAmsServer) GetLowProductSum(context.Context, *GetLowProductSumReq) (*GetLowProductSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLowProductSum not implemented")
+}
+func (UnimplementedAmsServer) GetProductSum(context.Context, *GetProductSumReq) (*GetProductSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductSum not implemented")
+}
+func (UnimplementedAmsServer) GetShopSalesRecordsSum(context.Context, *GetShopSalesRecordsSumReq) (*GetShopSalesRecordsSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopSalesRecordsSum not implemented")
+}
+func (UnimplementedAmsServer) GetShopSalesRecordsList(context.Context, *GetShopSalesRecordsListReq) (*GetShopSalesRecordsListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopSalesRecordsList not implemented")
+}
+func (UnimplementedAmsServer) GetShopTimeOrderSum(context.Context, *GetShopTimeOrderSumReq) (*GetShopTimeOrderSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopTimeOrderSum not implemented")
+}
+func (UnimplementedAmsServer) GetShopOrderSum(context.Context, *GetShopOrderSumReq) (*GetShopOrderSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopOrderSum not implemented")
+}
+func (UnimplementedAmsServer) GetOrderSum(context.Context, *GetOrderSumReq) (*GetOrderSumResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderSum not implemented")
+}
+func (UnimplementedAmsServer) GetNewUserSumToDay(context.Context, *GetNewUserSumToDayReq) (*GetNewUserSumToDayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNewUserSumToDay not implemented")
 }
 func (UnimplementedAmsServer) mustEmbedUnimplementedAmsServer() {}
 
@@ -899,6 +1145,258 @@ func _Ams_DeletePosition_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Ams_GetShopSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopSum(ctx, req.(*GetShopSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetUserSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetUserSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetUserSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetUserSum(ctx, req.(*GetUserSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopLowProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopLowProductListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopLowProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopLowProductList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopLowProductList(ctx, req.(*GetShopLowProductListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopLowProductSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopLowProductSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopLowProductSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopLowProductSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopLowProductSum(ctx, req.(*GetShopLowProductSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopProductListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopProductList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopProductList(ctx, req.(*GetShopProductListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopProductSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopProductSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopProductSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopProductSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopProductSum(ctx, req.(*GetShopProductSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetLowProductSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLowProductSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetLowProductSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetLowProductSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetLowProductSum(ctx, req.(*GetLowProductSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetProductSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetProductSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetProductSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetProductSum(ctx, req.(*GetProductSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopSalesRecordsSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopSalesRecordsSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopSalesRecordsSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopSalesRecordsSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopSalesRecordsSum(ctx, req.(*GetShopSalesRecordsSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopSalesRecordsList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopSalesRecordsListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopSalesRecordsList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopSalesRecordsList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopSalesRecordsList(ctx, req.(*GetShopSalesRecordsListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopTimeOrderSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopTimeOrderSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopTimeOrderSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopTimeOrderSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopTimeOrderSum(ctx, req.(*GetShopTimeOrderSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetShopOrderSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopOrderSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetShopOrderSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetShopOrderSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetShopOrderSum(ctx, req.(*GetShopOrderSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetOrderSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrderSumReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetOrderSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetOrderSum_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetOrderSum(ctx, req.(*GetOrderSumReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ams_GetNewUserSumToDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNewUserSumToDayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AmsServer).GetNewUserSumToDay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Ams_GetNewUserSumToDay_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AmsServer).GetNewUserSumToDay(ctx, req.(*GetNewUserSumToDayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Ams_ServiceDesc is the grpc.ServiceDesc for Ams service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1001,6 +1499,62 @@ var Ams_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePosition",
 			Handler:    _Ams_DeletePosition_Handler,
+		},
+		{
+			MethodName: "GetShopSum",
+			Handler:    _Ams_GetShopSum_Handler,
+		},
+		{
+			MethodName: "GetUserSum",
+			Handler:    _Ams_GetUserSum_Handler,
+		},
+		{
+			MethodName: "GetShopLowProductList",
+			Handler:    _Ams_GetShopLowProductList_Handler,
+		},
+		{
+			MethodName: "GetShopLowProductSum",
+			Handler:    _Ams_GetShopLowProductSum_Handler,
+		},
+		{
+			MethodName: "GetShopProductList",
+			Handler:    _Ams_GetShopProductList_Handler,
+		},
+		{
+			MethodName: "GetShopProductSum",
+			Handler:    _Ams_GetShopProductSum_Handler,
+		},
+		{
+			MethodName: "GetLowProductSum",
+			Handler:    _Ams_GetLowProductSum_Handler,
+		},
+		{
+			MethodName: "GetProductSum",
+			Handler:    _Ams_GetProductSum_Handler,
+		},
+		{
+			MethodName: "GetShopSalesRecordsSum",
+			Handler:    _Ams_GetShopSalesRecordsSum_Handler,
+		},
+		{
+			MethodName: "GetShopSalesRecordsList",
+			Handler:    _Ams_GetShopSalesRecordsList_Handler,
+		},
+		{
+			MethodName: "GetShopTimeOrderSum",
+			Handler:    _Ams_GetShopTimeOrderSum_Handler,
+		},
+		{
+			MethodName: "GetShopOrderSum",
+			Handler:    _Ams_GetShopOrderSum_Handler,
+		},
+		{
+			MethodName: "GetOrderSum",
+			Handler:    _Ams_GetOrderSum_Handler,
+		},
+		{
+			MethodName: "GetNewUserSumToDay",
+			Handler:    _Ams_GetNewUserSumToDay_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

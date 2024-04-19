@@ -165,3 +165,87 @@ func (s *AmsServer) DeletePosition(ctx context.Context, in *ams.DeletePositionRe
 	l := logic.NewDeletePositionLogic(ctx, s.svcCtx)
 	return l.DeletePosition(in)
 }
+
+// 店铺数量
+func (s *AmsServer) GetShopSum(ctx context.Context, in *ams.GetShopSumReq) (*ams.GetShopSumResp, error) {
+	l := logic.NewGetShopSumLogic(ctx, s.svcCtx)
+	return l.GetShopSum(in)
+}
+
+// 用户人数
+func (s *AmsServer) GetUserSum(ctx context.Context, in *ams.GetUserSumReq) (*ams.GetUserSumResp, error) {
+	l := logic.NewGetUserSumLogic(ctx, s.svcCtx)
+	return l.GetUserSum(in)
+}
+
+// 商品模块
+func (s *AmsServer) GetShopLowProductList(ctx context.Context, in *ams.GetShopLowProductListReq) (*ams.GetShopLowProductListResp, error) {
+	l := logic.NewGetShopLowProductListLogic(ctx, s.svcCtx)
+	return l.GetShopLowProductList(in)
+}
+
+// 进行门店对应折扣商品数量统计
+func (s *AmsServer) GetShopLowProductSum(ctx context.Context, in *ams.GetShopLowProductSumReq) (*ams.GetShopLowProductSumResp, error) {
+	l := logic.NewGetShopLowProductSumLogic(ctx, s.svcCtx)
+	return l.GetShopLowProductSum(in)
+}
+
+// 门店普通商品
+func (s *AmsServer) GetShopProductList(ctx context.Context, in *ams.GetShopProductListReq) (*ams.GetShopProductListResp, error) {
+	l := logic.NewGetShopProductListLogic(ctx, s.svcCtx)
+	return l.GetShopProductList(in)
+}
+
+// 进行门店对应普通商品数量统计
+func (s *AmsServer) GetShopProductSum(ctx context.Context, in *ams.GetShopProductSumReq) (*ams.GetShopProductSumResp, error) {
+	l := logic.NewGetShopProductSumLogic(ctx, s.svcCtx)
+	return l.GetShopProductSum(in)
+}
+
+// 统计折扣商品总量
+func (s *AmsServer) GetLowProductSum(ctx context.Context, in *ams.GetLowProductSumReq) (*ams.GetLowProductSumResp, error) {
+	l := logic.NewGetLowProductSumLogic(ctx, s.svcCtx)
+	return l.GetLowProductSum(in)
+}
+
+// 统计普通商品总量
+func (s *AmsServer) GetProductSum(ctx context.Context, in *ams.GetProductSumReq) (*ams.GetProductSumResp, error) {
+	l := logic.NewGetProductSumLogic(ctx, s.svcCtx)
+	return l.GetProductSum(in)
+}
+
+// 销售数据
+func (s *AmsServer) GetShopSalesRecordsSum(ctx context.Context, in *ams.GetShopSalesRecordsSumReq) (*ams.GetShopSalesRecordsSumResp, error) {
+	l := logic.NewGetShopSalesRecordsSumLogic(ctx, s.svcCtx)
+	return l.GetShopSalesRecordsSum(in)
+}
+
+// 各个店铺商品总销售的数据列表
+func (s *AmsServer) GetShopSalesRecordsList(ctx context.Context, in *ams.GetShopSalesRecordsListReq) (*ams.GetShopSalesRecordsListResp, error) {
+	l := logic.NewGetShopSalesRecordsListLogic(ctx, s.svcCtx)
+	return l.GetShopSalesRecordsList(in)
+}
+
+// 各个店铺根据时间段的订单数量
+func (s *AmsServer) GetShopTimeOrderSum(ctx context.Context, in *ams.GetShopTimeOrderSumReq) (*ams.GetShopTimeOrderSumResp, error) {
+	l := logic.NewGetShopTimeOrderSumLogic(ctx, s.svcCtx)
+	return l.GetShopTimeOrderSum(in)
+}
+
+// 各个店铺总的订单数量
+func (s *AmsServer) GetShopOrderSum(ctx context.Context, in *ams.GetShopOrderSumReq) (*ams.GetShopOrderSumResp, error) {
+	l := logic.NewGetShopOrderSumLogic(ctx, s.svcCtx)
+	return l.GetShopOrderSum(in)
+}
+
+// 今日消费用户数量
+func (s *AmsServer) GetOrderSum(ctx context.Context, in *ams.GetOrderSumReq) (*ams.GetOrderSumResp, error) {
+	l := logic.NewGetOrderSumLogic(ctx, s.svcCtx)
+	return l.GetOrderSum(in)
+}
+
+// 今日新增用户数量
+func (s *AmsServer) GetNewUserSumToDay(ctx context.Context, in *ams.GetNewUserSumToDayReq) (*ams.GetNewUserSumToDayResp, error) {
+	l := logic.NewGetNewUserSumToDayLogic(ctx, s.svcCtx)
+	return l.GetNewUserSumToDay(in)
+}

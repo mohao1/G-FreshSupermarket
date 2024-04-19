@@ -1,13 +1,13 @@
 package main
 
 import (
+	"DP/rpc/Payment/pb/payment"
 	"flag"
 	"fmt"
 
 	"DP/rpc/Payment/internal/config"
 	"DP/rpc/Payment/internal/server"
 	"DP/rpc/Payment/internal/svc"
-	"DP/rpc/Payment/payment"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/payment.yaml", "the config file")
+var configFile = flag.String("f", "rpc/Payment/etc/payment.yaml", "the config file")
 
 func main() {
 	flag.Parse()

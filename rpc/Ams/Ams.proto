@@ -327,6 +327,184 @@ message DeletePositionResp{
   string PositionId=3;
 }
 
+//数据统计
+//店铺数量
+message GetShopSumReq{
+  string adminId = 1;
+}
+message GetShopSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 ShopSum=3;
+}
+
+//用户人数
+message GetUserSumReq{
+  string adminId = 1;
+}
+message GetUserSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 UserSum=3;
+}
+
+//获取门店对应折扣商品列表
+message GetShopLowProductListReq{
+  string adminId = 1;
+  string ShopId = 2;
+  int64 limit = 3;
+}
+message GetShopLowProductListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated PositionDataSc ProductList = 3;
+}
+message PositionDataSc{
+  string ProductId = 1;
+  string ProductName = 2;
+  string price = 3;
+  string ProductSize = 4;
+  string ShopId = 5;
+  string ShopName = 6;
+  string productPicture = 7;
+  string ProductType = 8;
+  string CreationTime = 9;
+}
+
+//进行门店对应折扣商品数量统计
+message GetShopLowProductSumReq{
+  string adminId = 1;
+  string ShopId = 2;
+}
+message GetShopLowProductSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 ProductSum = 3;
+}
+
+//获取门店对应普通商品列表
+message GetShopProductListReq{
+  string adminId = 1;
+  string ShopId = 2;
+  int64 limit = 3;
+}
+message GetShopProductListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated PositionDataSc ProductList = 3;
+}
+
+//进行门店对应普通商品数量统计
+message GetShopProductSumReq{
+  string adminId = 1;
+  string ShopId = 2;
+}
+message GetShopProductSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 ProductSum = 3;
+}
+
+//统计折扣商品总量
+message GetLowProductSumReq{
+  string adminId = 1;
+}
+message GetLowProductSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 ProductSum = 3;
+}
+
+//统计普通商品总量
+message GetProductSumReq{
+  string adminId = 1;
+}
+message GetProductSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 ProductSum = 3;
+}
+
+//各个店铺总销售的数据
+message GetShopSalesRecordsSumReq{
+  string adminId = 1;
+  string ShopId = 2;
+}
+message GetShopSalesRecordsSumResp{
+  int64 code = 1;
+  string msg = 2;
+  int64 ShopSalesRecordsSum = 3;
+}
+
+//各个店铺商品总销售的数据列表
+message GetShopSalesRecordsListReq{
+  string adminId = 1;
+  string ShopId = 2;
+}
+message GetShopSalesRecordsListResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated SalesRecordsSumData SalesRecordsSumList = 3;
+}
+message SalesRecordsSumData{
+  string ProductId = 1;
+  string ProductName = 2;
+  string productPicture = 3;
+  string ProductSalesRecordsSum = 4;
+}
+
+//各个店铺根据时间段的订单数量
+message GetShopTimeOrderSumReq{
+  string adminId = 1;
+  string ShopId = 2;
+  int64 TopTime = 3;
+  int64 EndTime = 4;
+}
+message GetShopTimeOrderSumResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated ShopTimeOrderData ShopTimeOrderList = 3;
+}
+message ShopTimeOrderData{
+  string Time = 1;
+  string ShopId = 2;
+  string ShopName = 3;
+  int64 OrderSum = 4;
+}
+
+//各个店铺总的订单数量
+message GetShopOrderSumReq{
+  string adminId = 1;
+  string ShopId = 2;
+}
+message GetShopOrderSumResp{
+  int64 code = 1;
+  string msg = 2;
+  repeated ShopOrderSumData ShopOrderSumList = 3;
+
+}
+message ShopOrderSumData{
+  string ShopId = 2;
+  string ShopName = 3;
+  int64 OrderSum = 4;
+}
+
+//今日消费用户数量
+message GetOrderSumReq{
+  string adminId = 1;
+}
+message GetOrderSumResp{
+  int64 OrderSum = 1;
+}
+
+//今日新增用户数量
+message GetNewUserSumToDayReq{
+  string adminId = 1;
+}
+message GetNewUserSumToDayResp{
+  int64 AddUserSum = 1;
+}
+
 
 service Ams {
   //系统管理人员登录
@@ -382,6 +560,48 @@ service Ams {
   rpc UpDatePosition(UpDatePositionReq)returns(UpDatePositionResp);
   //身份信息删除
   rpc DeletePosition(DeletePositionReq)returns(DeletePositionResp);
+
+  //数据管理模块
+
+  //店铺数量
+  rpc GetShopSum(GetShopSumReq)returns(GetShopSumResp);
+  //用户人数
+  rpc GetUserSum(GetUserSumReq)returns(GetUserSumResp);
+
+  //商品模块
+  //门店折扣商品
+  //获取门店对应折扣商品列表
+  rpc GetShopLowProductList(GetShopLowProductListReq)returns(GetShopLowProductListResp);
+  //进行门店对应折扣商品数量统计
+  rpc GetShopLowProductSum(GetShopLowProductSumReq)returns(GetShopLowProductSumResp);
+  //门店普通商品
+  //获取门店对应普通商品列表
+  rpc GetShopProductList(GetShopProductListReq)returns(GetShopProductListResp);
+  //进行门店对应普通商品数量统计
+  rpc GetShopProductSum(GetShopProductSumReq)returns(GetShopProductSumResp);
+  //统计折扣商品总量
+  rpc GetLowProductSum(GetLowProductSumReq)returns(GetLowProductSumResp);
+  //统计普通商品总量
+  rpc GetProductSum(GetProductSumReq)returns(GetProductSumResp);
+
+  //销售数据
+  //各个店铺总销售的数据
+  rpc GetShopSalesRecordsSum(GetShopSalesRecordsSumReq)returns(GetShopSalesRecordsSumResp);
+
+  //各个店铺商品总销售的数据列表
+  rpc GetShopSalesRecordsList(GetShopSalesRecordsListReq)returns(GetShopSalesRecordsListResp);
+
+  //各个店铺根据时间段的订单数量
+  rpc GetShopTimeOrderSum (GetShopTimeOrderSumReq)returns(GetShopTimeOrderSumResp);
+
+  //各个店铺总的订单数量
+  rpc GetShopOrderSum (GetShopOrderSumReq)returns(GetShopOrderSumResp);
+
+  //今日消费用户数量
+  rpc GetOrderSum (GetOrderSumReq)returns(GetOrderSumResp);
+
+  //今日新增用户数量
+  rpc GetNewUserSumToDay (GetNewUserSumToDayReq)returns(GetNewUserSumToDayResp);
 
 
 }

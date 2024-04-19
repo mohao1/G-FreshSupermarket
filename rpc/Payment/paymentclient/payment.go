@@ -6,18 +6,23 @@ package paymentclient
 import (
 	"context"
 
-	"DP/rpc/Payment/payment"
+	"DP/rpc/Payment/pb/payment"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	Request  = payment.Request
-	Response = payment.Response
+	CancelPaymentReq  = payment.CancelPaymentReq
+	CancelPaymentResp = payment.CancelPaymentResp
+	PaymentReq        = payment.PaymentReq
+	PaymentResp       = payment.PaymentResp
 
 	Payment interface {
-		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+		// 付款
+		Payment(ctx context.Context, in *PaymentReq, opts ...grpc.CallOption) (*PaymentResp, error)
+		// 取消付款
+		CancelPayment(ctx context.Context, in *CancelPaymentReq, opts ...grpc.CallOption) (*CancelPaymentResp, error)
 	}
 
 	defaultPayment struct {
@@ -31,7 +36,14 @@ func NewPayment(cli zrpc.Client) Payment {
 	}
 }
 
-func (m *defaultPayment) Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+// 付款
+func (m *defaultPayment) Payment(ctx context.Context, in *PaymentReq, opts ...grpc.CallOption) (*PaymentResp, error) {
 	client := payment.NewPaymentClient(m.cli.Conn())
-	return client.Ping(ctx, in, opts...)
+	return client.Payment(ctx, in, opts...)
+}
+
+// 取消付款
+func (m *defaultPayment) CancelPayment(ctx context.Context, in *CancelPaymentReq, opts ...grpc.CallOption) (*CancelPaymentResp, error) {
+	client := payment.NewPaymentClient(m.cli.Conn())
+	return client.CancelPayment(ctx, in, opts...)
 }

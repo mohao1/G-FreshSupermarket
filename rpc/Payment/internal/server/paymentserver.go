@@ -8,7 +8,7 @@ import (
 
 	"DP/rpc/Payment/internal/logic"
 	"DP/rpc/Payment/internal/svc"
-	"DP/rpc/Payment/payment"
+	"DP/rpc/Payment/pb/payment"
 )
 
 type PaymentServer struct {
@@ -22,7 +22,14 @@ func NewPaymentServer(svcCtx *svc.ServiceContext) *PaymentServer {
 	}
 }
 
-func (s *PaymentServer) Ping(ctx context.Context, in *payment.Request) (*payment.Response, error) {
-	l := logic.NewPingLogic(ctx, s.svcCtx)
-	return l.Ping(in)
+// 付款
+func (s *PaymentServer) Payment(ctx context.Context, in *payment.PaymentReq) (*payment.PaymentResp, error) {
+	l := logic.NewPaymentLogic(ctx, s.svcCtx)
+	return l.Payment(in)
+}
+
+// 取消付款
+func (s *PaymentServer) CancelPayment(ctx context.Context, in *payment.CancelPaymentReq) (*payment.CancelPaymentResp, error) {
+	l := logic.NewCancelPaymentLogic(ctx, s.svcCtx)
+	return l.CancelPayment(in)
 }

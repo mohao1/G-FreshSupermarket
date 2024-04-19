@@ -3,14 +3,26 @@ syntax = "proto3";
 package payment;
 option go_package="./payment";
 
-message Request {
-  string ping = 1;
+//付款
+message PaymentReq{
+
+}
+message PaymentResp{
+
 }
 
-message Response {
-  string pong = 1;
+//取消付款
+message cancelPaymentReq{
+
 }
+message cancelPaymentResp{
+
+}
+
 
 service Payment {
-  rpc Ping(Request) returns(Response);
+  //付款
+  rpc payment(PaymentReq)returns(PaymentResp);
+  //取消付款
+  rpc cancelPayment(cancelPaymentReq)returns(cancelPaymentResp);
 }
