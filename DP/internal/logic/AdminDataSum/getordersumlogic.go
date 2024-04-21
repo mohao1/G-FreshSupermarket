@@ -1,7 +1,9 @@
 package AdminDataSum
 
 import (
+	"DP/rpc/Ams/amsclient"
 	"context"
+	"fmt"
 
 	"DP/DP/internal/svc"
 	"DP/DP/internal/types"
@@ -23,8 +25,30 @@ func NewGetOrderSumLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetOr
 	}
 }
 
+// GetOrderSum 今日消费用户数量
 func (l *GetOrderSumLogic) GetOrderSum(req *types.GetOrderSumReq) (resp *types.AmsDataResp, err error) {
-	// todo: add your logic here and delete this line
 
-	return
+	//获取JWT中的UserId
+	AdminId := fmt.Sprint(l.ctx.Value("jwtUserId"))
+
+	//准备数据
+	orderSumReq := amsclient.GetOrderSumReq{
+		AdminId: AdminId,
+	}
+
+	//调用RPC的服务
+	orderSum, err := l.svcCtx.AmsRpcClient.GetOrderSum(l.ctx, &orderSumReq)
+	if err != nil {
+		return &types.AmsDataResp{
+			Code: 400,
+			Msg:  "调用错误err:" + err.Error(),
+			Data: nil,
+		}, nil
+	}
+
+	return &types.AmsDataResp{
+		Code: 200,
+		Msg:  "获取成功",
+		Data: orderSum.OrderSum,
+	}, nil
 }

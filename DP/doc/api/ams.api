@@ -389,7 +389,7 @@ service DP-api {
     get /GetProductSum (GetProductSumReq) returns (AmsDataResp)
 
     //----销售数据----
-    @doc "GetProductSum-各个店铺总销售的数据"
+    @doc "GetShopSalesRecordsSum-各个店铺总销售的数据"
     @handler GetShopSalesRecordsSum
     post /GetShopSalesRecordsSum (GetShopSalesRecordsSumReq) returns (AmsDataResp)
 

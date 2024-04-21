@@ -1,7 +1,9 @@
 package AdminDataSum
 
 import (
+	"DP/rpc/Ams/amsclient"
 	"context"
+	"fmt"
 
 	"DP/DP/internal/svc"
 	"DP/DP/internal/types"
@@ -23,8 +25,33 @@ func NewGetShopTimeOrderSumLogic(ctx context.Context, svcCtx *svc.ServiceContext
 	}
 }
 
+// GetShopTimeOrderSum 各个店铺根据时间段的订单数量
 func (l *GetShopTimeOrderSumLogic) GetShopTimeOrderSum(req *types.GetShopTimeOrderSumReq) (resp *types.AmsDataResp, err error) {
-	// todo: add your logic here and delete this line
 
-	return
+	//获取JWT中的UserId
+	AdminId := fmt.Sprint(l.ctx.Value("jwtUserId"))
+
+	//准备数据
+	shopTimeOrderSumReq := amsclient.GetShopTimeOrderSumReq{
+		AdminId: AdminId,
+		ShopId:  req.ShopId,
+		TopTime: req.TopTime,
+		EndTime: req.EndTime,
+	}
+
+	//调用RPC的服务
+	shopTimeOrderSum, err := l.svcCtx.AmsRpcClient.GetShopTimeOrderSum(l.ctx, &shopTimeOrderSumReq)
+	if err != nil {
+		return &types.AmsDataResp{
+			Code: 400,
+			Msg:  "调用错误err:" + err.Error(),
+			Data: nil,
+		}, nil
+	}
+
+	return &types.AmsDataResp{
+		Code: shopTimeOrderSum.Code,
+		Msg:  shopTimeOrderSum.Msg,
+		Data: shopTimeOrderSum.ShopTimeOrderList,
+	}, nil
 }
