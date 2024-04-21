@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	AdminDataSum "DP/DP/internal/handler/AdminDataSum"
 	AdminLogin "DP/DP/internal/handler/AdminLogin"
 	AdminPosition "DP/DP/internal/handler/AdminPosition"
 	AdminProductType "DP/DP/internal/handler/AdminProductType"
@@ -531,5 +532,82 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/AdminPosition"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetShopSum",
+				Handler: AdminDataSum.GetShopSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetUserSum",
+				Handler: AdminDataSum.GetUserSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopLowProductList",
+				Handler: AdminDataSum.GetShopLowProductListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopLowProductSum",
+				Handler: AdminDataSum.GetShopLowProductSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopProductList",
+				Handler: AdminDataSum.GetShopProductListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopProductSum",
+				Handler: AdminDataSum.GetShopProductSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetLowProductSum",
+				Handler: AdminDataSum.GetLowProductSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetProductSum",
+				Handler: AdminDataSum.GetProductSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopSalesRecordsSum",
+				Handler: AdminDataSum.GetShopSalesRecordsSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopSalesRecordsList",
+				Handler: AdminDataSum.GetShopSalesRecordsListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopTimeOrderSum",
+				Handler: AdminDataSum.GetShopTimeOrderSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/GetShopOrderSum",
+				Handler: AdminDataSum.GetShopOrderSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetOrderSum",
+				Handler: AdminDataSum.GetOrderSumHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/GetNewUserSumToDay",
+				Handler: AdminDataSum.GetNewUserSumToDayHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/AdminDataSum"),
 	)
 }

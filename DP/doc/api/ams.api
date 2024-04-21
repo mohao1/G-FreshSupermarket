@@ -141,6 +141,57 @@ type (
     }
 )
 
+//AdminDataSum
+type (
+    GetShopSumReq{}
+
+    GetUserSumReq{}
+
+    GetShopLowProductListReq{
+        ShopId string `json:"shopId"`
+        limit int64 `json:"limit"`
+    }
+
+    GetShopLowProductSumReq{
+        ShopId string `json:"shopId"`
+    }
+
+    GetShopProductListReq{
+        ShopId string `json:"shopId"`
+        limit int64 `json:"limit"`
+    }
+
+    GetShopProductSumReq{
+        ShopId string `json:"shopId"`
+    }
+
+    GetLowProductSumReq{}
+
+    GetProductSumReq{}
+
+    GetShopSalesRecordsSumReq{
+        ShopId string `json:"shopId"`
+    }
+
+    GetShopSalesRecordsListReq{
+        ShopId string `json:"shopId"`
+    }
+
+    GetShopTimeOrderSumReq{
+        ShopId string `json:"shopId"`
+        TopTime int64 `json:"topTime"`
+        EndTime int64 `json:"endTime"`
+    }
+
+    GetShopOrderSumReq{
+        ShopId string `json:"shopId"`
+    }
+
+    GetOrderSumReq{}
+
+    GetNewUserSumToDayReq{}
+)
+
 
 type (
     AmsDataResp{
@@ -293,3 +344,75 @@ service DP-api{
     @handler DeletePosition
     post /DeletePosition(DeletePositionReq) returns (AmsDataResp)
 }
+
+@server(
+    prefix:     /AdminDataSum//语法块下的所有路由，新增 /AdminDataSum 路由前缀
+    group:      AdminDataSum//语法块下的所有路由，路由归并到 AdminDataSum 目录下
+    jwt : Auth //开启JWT的认证
+)
+service DP-api {
+    //----数量管理----
+    @doc "GetShopSum-店铺数量"
+    @handler GetShopSum
+    get /GetShopSum (GetShopSumReq) returns (AmsDataResp)
+
+    @doc "GetShopSum-用户人数"
+    @handler GetUserSum
+    get /GetUserSum (GetUserSumReq) returns (AmsDataResp)
+
+    //----商品模块----
+
+    //门店折扣商品
+    @doc "GetShopLowProductList-获取门店对应折扣商品列表"
+    @handler GetShopLowProductList
+    post /GetShopLowProductList (GetShopLowProductListReq) returns (AmsDataResp)
+
+    @doc "GetShopLowProductSum-进行门店对应折扣商品数量统计"
+    @handler GetShopLowProductSum
+    post /GetShopLowProductSum (GetShopLowProductSumReq) returns (AmsDataResp)
+
+    //----门店普通商品----
+    @doc "GetShopProductList-获取门店对应普通商品列表"
+    @handler GetShopProductList
+    post /GetShopProductList (GetShopProductListReq) returns (AmsDataResp)
+
+    @doc "GetShopProductSum-进行门店对应普通商品数量统计"
+    @handler GetShopProductSum
+    post /GetShopProductSum (GetShopProductSumReq) returns (AmsDataResp)
+
+    @doc "GetLowProductSum-统计折扣商品总量"
+    @handler GetLowProductSum
+    get /GetLowProductSum (GetLowProductSumReq) returns (AmsDataResp)
+
+    @doc "GetProductSum-统计普通商品总量"
+    @handler GetProductSum
+    get /GetProductSum (GetProductSumReq) returns (AmsDataResp)
+
+    //----销售数据----
+    @doc "GetProductSum-各个店铺总销售的数据"
+    @handler GetShopSalesRecordsSum
+    post /GetShopSalesRecordsSum (GetShopSalesRecordsSumReq) returns (AmsDataResp)
+
+    @doc "GetShopSalesRecordsList-各个店铺商品总销售的数据列表"
+    @handler GetShopSalesRecordsList
+    post /GetShopSalesRecordsList (GetShopSalesRecordsListReq) returns (AmsDataResp)
+
+    @doc "GetShopTimeOrderSum-各个店铺根据时间段的订单数量"
+    @handler GetShopTimeOrderSum
+    post /GetShopTimeOrderSum (GetShopTimeOrderSumReq) returns (AmsDataResp)
+
+    @doc "GetShopOrderSum-各个店铺总的订单数量"
+    @handler GetShopOrderSum
+    post /GetShopOrderSum (GetShopOrderSumReq) returns (AmsDataResp)
+
+    @doc "GetOrderSum-今日消费用户数量"
+    @handler GetOrderSum
+    get /GetOrderSum (GetOrderSumReq) returns (AmsDataResp)
+
+    @doc "GetNewUserSumToDay-今日新增用户数量"
+    @handler GetNewUserSumToDay
+    get /GetNewUserSumToDay (GetNewUserSumToDayReq) returns (AmsDataResp)
+
+}
+
+

@@ -371,6 +371,60 @@ type DeletePositionReq struct {
 	PositionId string `json:"positionId"`
 }
 
+type GetShopSumReq struct {
+}
+
+type GetUserSumReq struct {
+}
+
+type GetShopLowProductListReq struct {
+	ShopId string `json:"shopId"`
+	Limit  int64  `json:"limit"`
+}
+
+type GetShopLowProductSumReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetShopProductListReq struct {
+	ShopId string `json:"shopId"`
+	Limit  int64  `json:"limit"`
+}
+
+type GetShopProductSumReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetLowProductSumReq struct {
+}
+
+type GetProductSumReq struct {
+}
+
+type GetShopSalesRecordsSumReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetShopSalesRecordsListReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetShopTimeOrderSumReq struct {
+	ShopId  string `json:"shopId"`
+	TopTime int64  `json:"topTime"`
+	EndTime int64  `json:"endTime"`
+}
+
+type GetShopOrderSumReq struct {
+	ShopId string `json:"shopId"`
+}
+
+type GetOrderSumReq struct {
+}
+
+type GetNewUserSumToDayReq struct {
+}
+
 type AmsDataResp struct {
 	Code int64       `json:"code"`
 	Msg  string      `json:"msg"`
