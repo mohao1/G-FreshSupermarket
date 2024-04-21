@@ -194,6 +194,7 @@ func (l *PostOrderLogic) placeOrder(i int64, id string, OrderNumber string, sess
 			OrderName:      product.ProductName,
 			OrderTitle:     product.ProductTitle,
 			Price:          strconv.Itoa(atoi * int(i)),
+			ProductId:      product.ProductId,
 			ProductTypeId:  product.ProductTypeId,
 			OrderQuantity:  i,
 			ProductSize:    product.ProductSize,

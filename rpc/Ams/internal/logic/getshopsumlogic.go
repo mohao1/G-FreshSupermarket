@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 
 	"DP/rpc/Ams/internal/svc"
 	"DP/rpc/Ams/pb/ams"
@@ -23,9 +24,27 @@ func NewGetShopSumLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetSho
 	}
 }
 
-// 店铺数量
+// GetShopSum 店铺数量
 func (l *GetShopSumLogic) GetShopSum(in *ams.GetShopSumReq) (*ams.GetShopSumResp, error) {
-	// todo: add your logic here and delete this line
 
-	return &ams.GetShopSumResp{}, nil
+	//身份验证
+	admin, err := l.svcCtx.AdminModel.FindOne(l.ctx, in.AdminId)
+	if err != nil && err.Error() != "sql: no rows in result set" {
+		return nil, err
+	}
+	if admin == nil {
+		return nil, errors.New("权限不足")
+	}
+
+	//查询信息
+	shopListCount, err := l.svcCtx.ShopModel.SelectShopListCount(l.ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ams.GetShopSumResp{
+		Code:    200,
+		Msg:     "获取成功",
+		ShopSum: shopListCount.ShopCount,
+	}, nil
 }

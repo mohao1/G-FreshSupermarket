@@ -29,10 +29,21 @@ type (
 		SelectOrderDataListByShopAndTime(ctx context.Context, shopId string, time time.Time) (*[]OrderNumber, error)
 		SelectOrderNumberByOrderId(ctx context.Context, session sqlx.Session, orderId string) (*OrderNumber, error)
 		UpDateOrderReceive(ctx context.Context, session sqlx.Session, receive int64, orderNumberId string) error
+		SelectOrderTheDaySum(ctx context.Context) (*TheDayOrderSum, error)
+		SelectOrderTheStartTimeAndEndTimeByShopIdSum(ctx context.Context, shopId string, start time.Time, end time.Time) (*[]ShopTimeOrder, error)
 	}
 
 	customOrderNumberModel struct {
 		*defaultOrderNumberModel
+	}
+
+	TheDayOrderSum struct {
+		OrderCount int64 `db:"order_count"`
+	}
+
+	ShopTimeOrder struct {
+		OrderCount int64     `db:"order_count"`
+		Time       time.Time `db:"time"'`
 	}
 )
 
@@ -229,4 +240,27 @@ func (o *customOrderNumberModel) UpDateOrderReceive(ctx context.Context, session
 	}
 	return err
 
+}
+
+func (o *customOrderNumberModel) SelectOrderTheDaySum(ctx context.Context) (*TheDayOrderSum, error) {
+	query := fmt.Sprintf("select COUNT(*) AS `order_count` from %s WHERE DATE(`creation_time`)=CURDATE();", o.table)
+	var resp TheDayOrderSum
+	err := o.conn.QueryRowCtx(ctx, &resp, query)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
+
+}
+
+func (o *customOrderNumberModel) SelectOrderTheStartTimeAndEndTimeByShopIdSum(ctx context.Context, shopId string, start time.Time, end time.Time) (*[]ShopTimeOrder, error) {
+	query := fmt.Sprintf("select DATE(`creation_time`) AS `time` , COUNT(*) AS `order_count` from %s WHERE `shop_id` = ? AND DATE(`creation_time`) BETWEEN ? AND ? GROUP BY DATE(`creation_time`);", o.table)
+	var resp []ShopTimeOrder
+	err := o.conn.QueryRowsCtx(ctx, &resp, query, shopId, start, end)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
 }

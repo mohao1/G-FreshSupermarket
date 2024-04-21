@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 
 	"DP/rpc/Ams/internal/svc"
 	"DP/rpc/Ams/pb/ams"
@@ -23,9 +24,25 @@ func NewGetOrderSumLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetOr
 	}
 }
 
-// 今日消费用户数量
+// GetOrderSum 今日消费用户数量
 func (l *GetOrderSumLogic) GetOrderSum(in *ams.GetOrderSumReq) (*ams.GetOrderSumResp, error) {
-	// todo: add your logic here and delete this line
 
-	return &ams.GetOrderSumResp{}, nil
+	//身份验证
+	admin, err := l.svcCtx.AdminModel.FindOne(l.ctx, in.AdminId)
+	if err != nil && err.Error() != "sql: no rows in result set" {
+		return nil, err
+	}
+	if admin == nil {
+		return nil, errors.New("权限不足")
+	}
+
+	//查询信息
+	OrderSum, err := l.svcCtx.OrderNumberModel.SelectOrderTheDaySum(l.ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ams.GetOrderSumResp{
+		OrderSum: OrderSum.OrderCount,
+	}, nil
 }

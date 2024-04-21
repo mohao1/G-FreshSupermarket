@@ -20,10 +20,15 @@ type (
 		TransactSelectShop(ctx context.Context, session sqlx.Session, shopId string) (*Shop, error)
 		TransactUpDateShop(ctx context.Context, session sqlx.Session, data *Shop) error
 		TransactDeleteShop(ctx context.Context, session sqlx.Session, shopId string) error
+		SelectShopListCount(ctx context.Context) (*ShopListCount, error)
 	}
 
 	customShopModel struct {
 		*defaultShopModel
+	}
+
+	ShopListCount struct {
+		ShopCount int64 `db:"shop_count"`
 	}
 )
 
@@ -99,4 +104,14 @@ func (m *customShopModel) TransactDeleteShop(ctx context.Context, session sqlx.S
 		_, err := m.conn.ExecCtx(ctx, query, shopId)
 		return err
 	}
+}
+
+func (m *customShopModel) SelectShopListCount(ctx context.Context) (*ShopListCount, error) {
+	query := fmt.Sprintf("select COUNT(*) AS `shop_count` from %s ;", m.table)
+	var resp ShopListCount
+	err := m.conn.QueryRowCtx(ctx, &resp, query)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }

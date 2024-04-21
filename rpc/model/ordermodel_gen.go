@@ -40,6 +40,7 @@ type (
 		OrderName      string    `db:"order_name"`      // 订单名称
 		OrderTitle     string    `db:"order_title"`     // 订单内容
 		Price          string    `db:"price"`           // 价格
+		ProductId      string    `db:"product_id"`      // 商品id
 		ProductTypeId  string    `db:"product_type_id"` // 商品类型id
 		OrderQuantity  int64     `db:"order_quantity"`  // 商品数量
 		ProductSize    int64     `db:"product_size"`    // 商品规格
@@ -80,14 +81,14 @@ func (m *defaultOrderModel) FindOne(ctx context.Context, orderId string) (*Order
 }
 
 func (m *defaultOrderModel) Insert(ctx context.Context, data *Order) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, orderRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.OrderId, data.OrderName, data.OrderTitle, data.Price, data.ProductTypeId, data.OrderQuantity, data.ProductSize, data.ProductPicture, data.OrderNumber, data.ShopId, data.CreationTime, data.UpdataTime, data.DeleteKey)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, orderRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.OrderId, data.OrderName, data.OrderTitle, data.Price, data.ProductId, data.ProductTypeId, data.OrderQuantity, data.ProductSize, data.ProductPicture, data.OrderNumber, data.ShopId, data.CreationTime, data.UpdataTime, data.DeleteKey)
 	return ret, err
 }
 
 func (m *defaultOrderModel) Update(ctx context.Context, data *Order) error {
 	query := fmt.Sprintf("update %s set %s where `order_id` = ?", m.table, orderRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.OrderName, data.OrderTitle, data.Price, data.ProductTypeId, data.OrderQuantity, data.ProductSize, data.ProductPicture, data.OrderNumber, data.ShopId, data.CreationTime, data.UpdataTime, data.DeleteKey, data.OrderId)
+	_, err := m.conn.ExecCtx(ctx, query, data.OrderName, data.OrderTitle, data.Price, data.ProductId, data.ProductTypeId, data.OrderQuantity, data.ProductSize, data.ProductPicture, data.OrderNumber, data.ShopId, data.CreationTime, data.UpdataTime, data.DeleteKey, data.OrderId)
 	return err
 }
 

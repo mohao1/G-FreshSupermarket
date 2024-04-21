@@ -17,6 +17,8 @@ type ServiceContext struct {
 	UserModel           model.UserModel
 	ProductListModel    model.ProductListModel
 	LowProductListModel model.LowProductListModel
+	OrderNumberModel    model.OrderNumberModel
+	OrderModel          model.OrderModel
 	//注册事务进入全局
 	TransactCtx func(ctx context.Context, fn func(context.Context, sqlx.Session) error) error
 }

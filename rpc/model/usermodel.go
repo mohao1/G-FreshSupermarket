@@ -17,10 +17,20 @@ type (
 		TransactInsert(ctx context.Context, session sqlx.Session, data *User) (sql.Result, error)
 		PhoneSelectUser(ctx context.Context, session sqlx.Session, phone string) (*User, error)
 		TransactSelectUserList(ctx context.Context, session sqlx.Session, limit int64) (*[]User, error)
+		SelectUserListCount(ctx context.Context) (*UserListCount, error)
+		SelectUserNumberTheDay(ctx context.Context) (*TheUserNumber, error)
 	}
 
 	customUserModel struct {
 		*defaultUserModel
+	}
+
+	UserListCount struct {
+		UserCount int64 `db:"user_count"`
+	}
+
+	TheUserNumber struct {
+		UserCount int64 `db:"user_count"`
 	}
 )
 
@@ -72,6 +82,26 @@ func (c *customUserModel) TransactSelectUserList(ctx context.Context, session sq
 		if err != nil {
 			return nil, err
 		}
+	}
+	return &resp, nil
+}
+
+func (c *customUserModel) SelectUserListCount(ctx context.Context) (*UserListCount, error) {
+	query := fmt.Sprintf("select COUNT(*) AS `user_count` from %s ; ", c.table)
+	var resp UserListCount
+	err := c.conn.QueryRowCtx(ctx, &resp, query)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *customUserModel) SelectUserNumberTheDay(ctx context.Context) (*TheUserNumber, error) {
+	query := fmt.Sprintf("select COUNT(*) AS `user_count` from %s  where DATE(`registration_time`)=CURDATE(); ", c.table)
+	var resp TheUserNumber
+	err := c.conn.QueryRowCtx(ctx, &resp, query)
+	if err != nil {
+		return nil, err
 	}
 	return &resp, nil
 }
